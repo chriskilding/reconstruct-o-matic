@@ -9,34 +9,54 @@ function calibrate(skeletons) {
 // from multiple angles
 // NOTE: SKELETONS SHOULD ALREADY HAVE HAD THEIR ORIENTATION NORMALISED
 // SO ALL POSITIONS ARE RELATIVE TO THE AUTHORITATIVE SENSOR
-function combine(skeletons) {
-  var bestPositionConfidence = 0;
-  var bestPosition;
-  
-  var bestRotationConfidence = 0;
-  var bestRotation;
-  
-  for (var i = 0; i < skeletons.length; i++) {    
-    if (skeletons[i].positionConfidence >= bestPositionConfidence) {
-      bestPositionConfidence = skeletons[i].positionConfidence;
-      bestPosition = skeletons[i].position;
-    }
-    
-    if (skeletons[i].rotationConfidence >= bestRotationConfidence) {
-      bestRotationConfidence = skeletons[i].rotationConfidence;
-      bestRotation = skeletons[i].rotation;
-    }
-  }
-  
-  // Return the combined skeleton data in an identical format to input skeleton
-  return {
-    id: 1, // Don't really care
-    position: bestPosition,
-    positionConfidence: bestPositionConfidence,
-    rotation: bestRotation,
-    rotationConfidence: bestRotationConfidence
-  };
+function reconstructSkeleton(skeletons) {
+
+  return skeletons.reduce(reduceSkeletons);  
 }
 
-exports.combine = combine;
+// Combine 2 skeletons into 1
+function reduceSkeletons(a, b, index, array) {
+
+  return recurse(a, b, []);
+}
+
+function recurse(a, b, output) {
+  
+  if ((a.length == 0) || (b.length == 0)) {
+    // Base case
+    return output;    
+  }
+  else {
+    var reducedJoint = [ head(a), head(b) ].reduce(reduceJoints);
+    return recurse(tail(a), tail(b), output.concat(reducedJoint));
+  }
+  
+}
+
+function head(arr) {
+  return arr.slice(0, 0);
+}
+
+function tail(arr) {
+  return arr.slice(1);
+}
+
+function reduceJoints(previousValue, currentValue, index, array) {
+  var returner = previousValue;
+  
+  // If dominated by the next (current) value, update and replace
+  if (returner.positionConfidence < currentValue.positionConfidence) {
+    returner.positionConfidence = currentValue.positionConfidence;
+    returner.position = currentValue.position;
+  }
+  
+  if (returner.rotationConfidence < currentValue.rotationConfidence) {
+    returner.rotationConfidence = currentValue.rotationConfidence;
+    returner.rotation = currentValue.rotation;
+  }
+
+  return returner;
+}
+
+exports.reconstructSkeleton = reconstructSkeleton;
 exports.calibrate = calibrate;
