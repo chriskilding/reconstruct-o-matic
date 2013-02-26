@@ -1,0 +1,17 @@
+{
+  "name": "reconstruct-o-matic",
+  "private": "true",
+  "version": "0.0.1",
+  "author": "Chris Kilding <mr.chris.k@gmail.com>",
+  "main": "./server",
+  "dependencies": {
+    "socket.io": "0.9.11",
+    "wrappers": "0.2.1",
+    "hiredis"   : "0.1.14",
+    "redis"     : "0.8.2"
+  },
+  "license": "Copyright 2013 Chris Kilding. All rights reserved",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
