@@ -1,9 +1,4 @@
-// Calibrate the system
-// figure out the orientations of the sensor on each client
-// relative to the authoritative client
-function calibrate(skeletons) {
 
-}
 
 // Combines OpenNI skeleton data to provide a more accurate overall model of the user's body
 // from multiple angles
@@ -59,4 +54,3 @@ function reduceJoints(previousValue, currentValue, index, array) {
 }
 
 exports.reconstructSkeleton = reconstructSkeleton;
-exports.calibrate = calibrate;
