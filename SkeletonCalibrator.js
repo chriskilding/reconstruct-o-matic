@@ -15,51 +15,19 @@
 // i.e. how much skeleton coordinates from that sensor need to be translated by.
 // And we work out this difference for each secondary sensor used.
 
-var sylvester = require('sylvester');
-var Vector = sylvester.Vector; 
-var Matrix = sylvester.Matrix; 
+var posCalibrator = require('./PositionCalibrator');
 
 // Calibrate the system
 // figure out the orientations of the sensor on each client
 // relative to the authoritative client
-function calibrate(skeletons) {
-  var refSkel = skeletons[0];
-
-  for (var i = 0; i < skeletons.length; i++) {    
-      skeletons[i].positionConfidence;
-      skeletons[i].position;
-    
-    
-      skeletons[i].rotationConfidence;
-      skeletons[i].rotation;
-    
+// and return a transform matrix for each secondary sensor
+function calibrate(refUser, otherUsers) {
+  otherUsers.forEach(other) {
+    var correctorFunc = posCalibrator.calibratePosition(refUser.position, other.position);
   }
 }
 
-function distanceDelta(referenceUser, otherUser) {
-  // Distance from the reference sensor
-  var refVector = Vector.create(referenceUser.position);
-  
-  // Distance from the secondary sensor
-  var otherVector = Vector.create(otherUser.position);
-  
-  // What's the difference?
-  return refVector.distanceFrom(otherVector);
-}
 
 
-
-
-// TODO implement rotation normalization if needed
-// Per joint
-function jointRotationDelta(referenceJoint, otherJoint) {
-  // Rotation matrix of the reference
-  var refMatrix = Matrix.create(referenceJoint.position);
-  
-  // Rotation matrix of the secondary
-  var otherMatrix = Matrix.create(otherJoint.position);
-  
-
-}
 
 exports.calibrate = calibrate;
