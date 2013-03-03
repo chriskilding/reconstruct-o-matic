@@ -5,7 +5,7 @@ console.log("Starting up...");
 var io = require('socket.io').listen(3000 /*, { log: false }*/);
 var wrap = require('wrappers');
 
-var SyncedSkeleton = require('lib/SyncedSkeleton');
+var SyncedSkeleton = require('./lib/SyncedSkeleton');
 
 io.sockets.on('connection', function (socket) {  
   // We need some way to uniquely identify each client
@@ -19,9 +19,9 @@ io.sockets.on('connection', function (socket) {
   // Received calibration data from client
   socket.on('calibrate', function(data) {
     socket.rooms.forEach(function(roomId) {
-  
-    // Add the calibration data
-    calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
+      // Add the calibration data
+      calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
+    });
   });
     
   // Received 'real' data from a client
