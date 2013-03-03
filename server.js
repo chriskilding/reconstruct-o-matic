@@ -26,28 +26,29 @@ io.sockets.on('connection', function (socket) {
     
   // Received 'real' data from a client
   socket.on('request', function(data) {
-    socket.rooms.forEach(function(roomId) {
-        
-      if (isReference(roomId, socket)) {
-        // Came from a primary sensor
-        SyncedSkeleton.pushReal(roomId, data);
-        
-        // Aaaaand finish the window
-        var reconstructed = SyncedSkeleton.finishWindow(roomId);
-        
-        // And tell the room about it
-	    // INCLUDING THE CLIENT THAT SENT THE DATA
-        io.sockets.in(roomId).emit('response', reconstructed);
-      }
-      else {
-        // Convert data before pushing
-        // (it probably came from a secondary sensor)
-        SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
-      }
-      
-      
-      
-	});
+    
+    if (socket.rooms) {
+			socket.rooms.forEach(function(roomId) {
+		
+				if (isReference(roomId, socket)) {
+				// Came from a primary sensor
+				SyncedSkeleton.pushReal(roomId, data);
+		
+				// Aaaaand finish the window
+				var reconstructed = SyncedSkeleton.finishWindow(roomId);
+		
+				// And tell the room about it
+				// INCLUDING THE CLIENT THAT SENT THE DATA
+				io.sockets.in(roomId).emit('response', reconstructed);
+				}
+				else {
+				// Convert data before pushing
+				// (it probably came from a secondary sensor)
+				SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
+				}
+		
+			});
+		}
   });
   
   // Client setting its 'sharing code' to team up with another  
