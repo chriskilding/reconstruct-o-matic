@@ -12,34 +12,47 @@ io.sockets.on('connection', function (socket) {
   // socket.io client id is the socket.id - that'll do
   var clientId = socket.id;       
   
+  // The data conversion function that will be applied
+  // if this is a secondary sensor
+  var calibrationFunc = {};
+  
   // Received calibration data from client
   socket.on('calibrate', function(data) {
     socket.rooms.forEach(function(roomId) {
   
-	  var combinedSkeleton = SyncedSkeleton.pushCalibrate(roomId, data);
-	  
-	  if (combinedSkeleton) {
-	    .emit(
-	  }
+    // Add the calibration data
+    calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
   });
     
   // Received 'real' data from a client
   socket.on('request', function(data) {
     socket.rooms.forEach(function(roomId) {
-	  var combinedSkeleton = SyncedSkeleton.push(roomId, clientId, data);
-	  
-	  // Needs to go to everyone in the common session
-	  // INCLUDING THE CLIENT THAT SENT THE DATA
-	  if (combinedSkeleton) {
-	    io.sockets.in(roomId).emit('response', combinedSkeleton);
-	  }
+        
+      if (isReference(roomId, socket)) {
+        // Came from a primary sensor
+        SyncedSkeleton.pushReal(roomId, data);
+        
+        // Aaaaand finish the window
+        var reconstructed = SyncedSkeleton.finishWindow(roomId);
+        
+        // And tell the room about it
+	    // INCLUDING THE CLIENT THAT SENT THE DATA
+        io.sockets.in(roomId).emit('response', reconstructed);
+      }
+      else {
+        // Convert data before pushing
+        // (it probably came from a secondary sensor)
+        SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
+      }
+      
+      
+      
 	});
   });
   
   // Client setting its 'sharing code' to team up with another  
   socket.on('subscribe', function(data) {
     socket.join(data.room);
-    SyncedSkeleton.addClientToGroup(data.room, clientId);
   });
 
   socket.on('unsubscribe', function(data) {
