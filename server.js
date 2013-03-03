@@ -18,10 +18,12 @@ io.sockets.on('connection', function (socket) {
   
   // Received calibration data from client
   socket.on('calibrate', function(data) {
-    socket.rooms.forEach(function(roomId) {
-      // Add the calibration data
-      calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
-    });
+		if (socket.rooms) {
+			socket.rooms.forEach(function(roomId) {
+				// Add the calibration data
+				calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
+			});
+		}
   });
     
   // Received 'real' data from a client
