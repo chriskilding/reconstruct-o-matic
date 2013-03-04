@@ -2,7 +2,7 @@
 console.log("Starting up...");
 
 // Uses the socket.io server component (debug output suppressed)
-var io = require('socket.io').listen(3000 /*, { log: false }*/);
+var io = require('socket.io').listen(3000, { log: false });
 var _ = require('underscore');
 
 // Ensure Redis is cleaned on startup
