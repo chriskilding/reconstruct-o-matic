@@ -19,8 +19,10 @@ io.sockets.on('connection', function (socket) {
   
   // Received calibration data from client
   socket.on('calibrate', function(data) {
-		if (socket.rooms) {
-			socket.rooms.forEach(function(roomId) {
+    var rooms = io.sockets.manager.roomClients[socket.id];
+		console.log('this socket is in', rooms);
+		if (rooms) {
+			/*rooms.forEach(function(roomId) {
 			
 			  if (isReference(roomId, socket)) {
 			    SyncedSkeleton.setReferencePoint(roomId, data);
@@ -28,7 +30,7 @@ io.sockets.on('connection', function (socket) {
 			  else {
 					calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
 				}
-			});
+			});*/
 		}
   });
     
@@ -36,6 +38,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('request', function(data) {
     
     if (socket.rooms) {
+			console.log('got req');
+
 			socket.rooms.forEach(function(roomId) {
 		
 				if (isReference(roomId, socket)) {
@@ -60,12 +64,13 @@ io.sockets.on('connection', function (socket) {
   });
   
   // Client setting its 'sharing code' to team up with another  
-  socket.on('subscribe', function(data) {
-    socket.join(data.room);
+  socket.on('subscribe', function(roomId) {
+  	console.log('client joined room', roomId);
+    socket.join(roomId);
   });
 
-  socket.on('unsubscribe', function(data) {
-    socket.leave(data.room);
+  socket.on('unsubscribe', function(roomId) {
+    socket.leave(roomId);
   });
   
   socket.on('disconnect', function() {    
