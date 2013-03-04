@@ -17,21 +17,30 @@ io.sockets.on('connection', function (socket) {
   // defaults to a simple passthrough func at the start
   var calibrationFunc = function (data) {return data;};
   
+  // Shortcut to the rooms this client is in
+  var rooms = [];
+  
   // Received calibration data from client
   socket.on('calibrate', function(data) {
-    var rooms = io.sockets.manager.roomClients[socket.id];
+    /*var rooms = io.sockets.manager.roomClients[socket.id];
 		console.log('this socket is in', rooms);
 		if (rooms) {
-			/*rooms.forEach(function(roomId) {
-			
+		  // Convert to an array
+		  var roomsArr = Object.keys(rooms);
+		  // Don't want the socket.io global room!
+		  roomsArr.splice(0, 1);*/
+		  
+			rooms.forEach(function(roomId) {
 			  if (isReference(roomId, socket)) {
-			    SyncedSkeleton.setReferencePoint(roomId, data);
+  		  	console.log('Reference data for ', roomId);
+
+			   // SyncedSkeleton.setReferencePoint(roomId, data);
 			  }
 			  else {
-					calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
+					//calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
 				}
-			});*/
-		}
+			});
+		//}
   });
     
   // Received 'real' data from a client
@@ -67,6 +76,7 @@ io.sockets.on('connection', function (socket) {
   socket.on('subscribe', function(roomId) {
   	console.log('client joined room', roomId);
     socket.join(roomId);
+    rooms.push(roomId);
   });
 
   socket.on('unsubscribe', function(roomId) {
@@ -79,5 +89,5 @@ io.sockets.on('connection', function (socket) {
 });
 
 function isReference(roomId, clientSocket) {
-  return io.sockets.clients(roomId)[0] == clientSocket;
+  return io.sockets.clients(roomId)[0].id == clientSocket.id;
 }
