@@ -5,6 +5,9 @@ console.log("Starting up...");
 var io = require('socket.io').listen(3000 /*, { log: false }*/);
 var _ = require('underscore');
 
+// Ensure Redis is cleaned on startup
+require('redis').createClient(6379, 'localhost').flushall();
+
 var SyncedSkeleton = require('./lib/SyncedSkeleton');
 
 io.sockets.on('connection', function (socket) {  
@@ -29,7 +32,9 @@ io.sockets.on('connection', function (socket) {
 				SyncedSkeleton.setReferencePoint(roomId, data);
 			}
 			else {
-				calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
+				SyncedSkeleton.getCalibrationFunc(roomId, data, function(result) {
+				  calibrationFunc = result;
+				});
 			}
 		});
 
@@ -44,12 +49,13 @@ io.sockets.on('connection', function (socket) {
 				SyncedSkeleton.pushReal(roomId, data);
 	
 				// Aaaaand finish the window
-				// FIXME something wrong caused by this call
-				/*var reconstructed = SyncedSkeleton.finishWindow(roomId);
-	
-				// And tell the room about it
-				// INCLUDING THE CLIENT THAT SENT THE DATA
-				io.sockets.in(roomId).emit('response', reconstructed);*/
+				SyncedSkeleton.finishWindow(roomId, function(reconstructed) {
+					// And tell the room about it
+					// INCLUDING THE CLIENT THAT SENT THE DATA
+					if (reconstructed) {
+						io.sockets.in(roomId).emit('response', reconstructed);
+					}
+				});
 			}
 			else {
 				// Convert data before pushing
@@ -74,10 +80,16 @@ io.sockets.on('connection', function (socket) {
     rooms = _.filter(rooms, function(str) {
     	return str != roomId;
     });
+    
+    SyncedSkeleton.clear(roomId);
   });
   
   socket.on('disconnect', function() {    
-    console.log('User disconnected: ' + clientId);  
+    console.log('User disconnected: ' + clientId);
+    
+    rooms.forEach(function(roomId) {
+      SyncedSkeleton.clear(roomId);
+    }); 
   });
 });
 
