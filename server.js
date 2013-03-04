@@ -14,14 +14,20 @@ io.sockets.on('connection', function (socket) {
   
   // The data conversion function that will be applied
   // if this is a secondary sensor
-  var calibrationFunc = {};
+  // defaults to a simple passthrough func at the start
+  var calibrationFunc = function (data) {return data;};
   
   // Received calibration data from client
   socket.on('calibrate', function(data) {
 		if (socket.rooms) {
 			socket.rooms.forEach(function(roomId) {
-				// Add the calibration data
-				calibrationFunc = SyncedSkeleton.pushCalibrate(roomId, data);
+			
+			  if (isReference(roomId, socket)) {
+			    SyncedSkeleton.setReferencePoint(roomId, data);
+			  }
+			  else {
+					calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
+				}
 			});
 		}
   });
@@ -33,20 +39,20 @@ io.sockets.on('connection', function (socket) {
 			socket.rooms.forEach(function(roomId) {
 		
 				if (isReference(roomId, socket)) {
-				// Came from a primary sensor
-				SyncedSkeleton.pushReal(roomId, data);
+					// Came from a primary sensor
+					SyncedSkeleton.pushReal(roomId, data);
 		
-				// Aaaaand finish the window
-				var reconstructed = SyncedSkeleton.finishWindow(roomId);
+					// Aaaaand finish the window
+					var reconstructed = SyncedSkeleton.finishWindow(roomId);
 		
-				// And tell the room about it
-				// INCLUDING THE CLIENT THAT SENT THE DATA
-				io.sockets.in(roomId).emit('response', reconstructed);
+					// And tell the room about it
+					// INCLUDING THE CLIENT THAT SENT THE DATA
+					io.sockets.in(roomId).emit('response', reconstructed);
 				}
 				else {
-				// Convert data before pushing
-				// (it probably came from a secondary sensor)
-				SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
+					// Convert data before pushing
+					// (it probably came from a secondary sensor)
+					SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
 				}
 		
 			});
