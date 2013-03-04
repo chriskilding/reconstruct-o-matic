@@ -3,7 +3,7 @@ console.log("Starting up...");
 
 // Uses the socket.io server component (debug output suppressed)
 var io = require('socket.io').listen(3000 /*, { log: false }*/);
-var wrap = require('wrappers');
+var _ = require('underscore');
 
 var SyncedSkeleton = require('./lib/SyncedSkeleton');
 
@@ -22,54 +22,42 @@ io.sockets.on('connection', function (socket) {
   
   // Received calibration data from client
   socket.on('calibrate', function(data) {
-    /*var rooms = io.sockets.manager.roomClients[socket.id];
-		console.log('this socket is in', rooms);
-		if (rooms) {
-		  // Convert to an array
-		  var roomsArr = Object.keys(rooms);
-		  // Don't want the socket.io global room!
-		  roomsArr.splice(0, 1);*/
-		  
-			rooms.forEach(function(roomId) {
-			  if (isReference(roomId, socket)) {
-  		  	console.log('Reference data for ', roomId);
+		rooms.forEach(function(roomId) {
+			if (isReference(roomId, socket)) {
+				console.log('Reference data for ', roomId);
 
-			   // SyncedSkeleton.setReferencePoint(roomId, data);
-			  }
-			  else {
-					//calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
-				}
-			});
-		//}
+				SyncedSkeleton.setReferencePoint(roomId, data);
+			}
+			else {
+				calibrationFunc = SyncedSkeleton.getCalibrationFunc(roomId, data);
+			}
+		});
+
   });
     
   // Received 'real' data from a client
   socket.on('request', function(data) {
-    
-    if (socket.rooms) {
-			console.log('got req');
-
-			socket.rooms.forEach(function(roomId) {
-		
-				if (isReference(roomId, socket)) {
-					// Came from a primary sensor
-					SyncedSkeleton.pushReal(roomId, data);
-		
-					// Aaaaand finish the window
-					var reconstructed = SyncedSkeleton.finishWindow(roomId);
-		
-					// And tell the room about it
-					// INCLUDING THE CLIENT THAT SENT THE DATA
-					io.sockets.in(roomId).emit('response', reconstructed);
-				}
-				else {
-					// Convert data before pushing
-					// (it probably came from a secondary sensor)
-					SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
-				}
-		
-			});
-		}
+		rooms.forEach(function(roomId) {
+	
+			if (isReference(roomId, socket)) {
+				// Came from a primary sensor
+				SyncedSkeleton.pushReal(roomId, data);
+	
+				// Aaaaand finish the window
+				// FIXME something wrong caused by this call
+				/*var reconstructed = SyncedSkeleton.finishWindow(roomId);
+	
+				// And tell the room about it
+				// INCLUDING THE CLIENT THAT SENT THE DATA
+				io.sockets.in(roomId).emit('response', reconstructed);*/
+			}
+			else {
+				// Convert data before pushing
+				// (it probably came from a secondary sensor)
+				SyncedSkeleton.pushReal(roomId, calibrationFunc(data));
+			}
+	
+		});
   });
   
   // Client setting its 'sharing code' to team up with another  
@@ -81,6 +69,11 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('unsubscribe', function(roomId) {
     socket.leave(roomId);
+    
+    // Also strip that value from the 'shortcut' list
+    rooms = _.filter(rooms, function(str) {
+    	return str != roomId;
+    });
   });
   
   socket.on('disconnect', function() {    

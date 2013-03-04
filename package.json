@@ -6,10 +6,10 @@
   "main": "./server",
   "dependencies": {
     "socket.io": "0.9.11",
-    "wrappers": "0.2.1",
     "hiredis"   : "0.1.14",
     "redis"     : "0.8.2", 
-    "sylvester" : "0.0.21" 
+    "sylvester" : "0.0.21",
+    "underscore": "1.4.4"
   },
   "license": "Copyright 2013 Chris Kilding. All rights reserved",
   "engines": {
