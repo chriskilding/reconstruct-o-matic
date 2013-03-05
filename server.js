@@ -53,6 +53,8 @@ io.sockets.on('connection', function (socket) {
 					// And tell the room about it
 					// INCLUDING THE CLIENT THAT SENT THE DATA
 					if (reconstructed) {
+					  console.log('reconstructed data', reconstructed);
+
 						io.sockets.in(roomId).emit('response', reconstructed);
 					}
 				});
