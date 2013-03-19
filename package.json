@@ -10,7 +10,8 @@
     "redis"     : "0.8.2", 
     "sylvester" : "0.0.21",
     "underscore": "1.4.4",
-    "async": "0.2.6"
+    "async": "0.2.6",
+    "qunit": "0.5.16"
   },
   "license": "Copyright 2013 Chris Kilding. All rights reserved",
   "engines": {
