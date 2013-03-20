@@ -41,3 +41,15 @@ test("rotationDeltaMatrix - all zeroes", function (assert) {
   
   deepEqual(actual, expected, true);
 });
+
+test("rotationDeltaMatrix - empty args", function (assert) {
+  // an empty array should be handled fine
+  var refMatrix = [];
+  // doesn't have to be the same
+  var otherMatrix = [];
+  // no crash
+  var expected = [];
+  var actual = RotationCalibrator.rotationDeltaMatrix(refMatrix, otherMatrix);
+  
+  deepEqual(actual, expected, true);
+});
