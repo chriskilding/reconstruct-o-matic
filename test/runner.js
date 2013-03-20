@@ -8,6 +8,13 @@ testrunner.run([
           namespace: "PositionCalibrator"
         },
         tests: "test/PositionCalibratorTest.js"
+    },
+    {
+        code: {
+          path: "lib/RotationCalibrator.js",
+          namespace: "RotationCalibrator"
+        },
+        tests: "test/RotationCalibratorTest.js"
     }
 ], function(err, report) {
     console.log(report);
