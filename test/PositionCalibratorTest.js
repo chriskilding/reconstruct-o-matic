@@ -41,7 +41,7 @@ test("convertPositionValue - works with 3-4-5 rule", function (assert) {
   deepEqual(result, [3, 3, 3], true);
 });
 
-test("convertPositionValue - negative numbers don't yield NaNs", function (assert) {
+test("convertPositionValue - hyp smaller than opp or adj doesn't yield NaNs", function (assert) {
   var hypotenuse = [4, 4, 4];
   var otherPosition = [5, 5, 5];
   var result = PositionCalibrator.convertPositionValue(hypotenuse, otherPosition);
