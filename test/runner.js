@@ -3,7 +3,10 @@ var testrunner = require("qunit");
 // array of code and test files
 testrunner.run([
     {
-        code: "lib/PositionCalibrator.js",
+        code: {
+          path: "lib/PositionCalibrator.js",
+          namespace: "PositionCalibrator"
+        },
         tests: "test/PositionCalibratorTest.js"
     }
 ], function(err, report) {
