@@ -15,7 +15,6 @@
 function close(actual, expected, maxDifference, message) {
 	var passes = (actual === expected) || Math.abs(actual - expected) <= maxDifference;
 	QUnit.push(passes, actual, expected, message);
-  //ok(passes, message);
 }
 
 /**
@@ -32,8 +31,22 @@ function close(actual, expected, maxDifference, message) {
 function notClose(actual, expected, minDifference, message) {
 	var passes = Math.abs(actual - expected) > minDifference;
   QUnit.push(passes, actual, expected, message);
-  //ok(passes, message);
+}
+
+// Adding some array functions for convenience
+function arrayClose(actual, expected, maxDifference, message) {
+  if (actual.length != expected.length) {
+    ok(false, "actual and expected arrays not the same length");
+  }
+  else {
+    for (var i = 0; i < actual.length; i++) {
+      var exp = expected[i];
+      var act = actual[i];
+      close(act, exp, maxDifference, message);
+    }
+  }
 }
 
 exports.close = close;
 exports.notClose = notClose;
+exports.arrayClose = arrayClose;

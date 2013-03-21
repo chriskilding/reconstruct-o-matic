@@ -90,8 +90,9 @@ test("convertRealComponent - delta equals newRotComponent size", function (asser
   // equally big delta
   var deltaComponent = 0.5;
   
-  var result = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
-  floatingPointEqual(result, 0);
+  var actual = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
+  //floatingPointEqual(result, 0);
+  closetest.close(actual, 0, maxDifference, true);
 });
 
 test("convertRealComponent - regular case", function (assert) {
@@ -99,8 +100,9 @@ test("convertRealComponent - regular case", function (assert) {
   // zero delta
   var deltaComponent = 0.3;
   
-  var result = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
-  floatingPointEqual(result, 0.2);
+  var actual = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
+  //floatingPointEqual(result, 0.2);
+  closetest.close(actual, 0.2, maxDifference, true);
 });
 
 test("convertRealMatrix - zero delta means no change", function (assert) {
