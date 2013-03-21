@@ -1,3 +1,6 @@
+// Bring in plugins
+var closetest = require("./utilities/close");
+
 QUnit.module("RotationCalibrator");
 
 // Some calculations involve floating-point arithmetic
@@ -5,7 +8,7 @@ QUnit.module("RotationCalibrator");
 // that's not a problem here,
 // just as long as the error stays below this threshold
 // NOTE: floating-point error means you can't use QUnit `equal`
-var maxFloatingPointErrorMargin = 0.000001;
+var maxFloatingPointErrorMargin, maxDifference = 0.000001;
 
 // Some fixtures
 var realData = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
@@ -76,8 +79,10 @@ test("convertRealComponent - zero delta", function (assert) {
   // zero delta
   var deltaComponent = 0;
   
-  var result = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
-  floatingPointEqual(result, 0.5);
+  var actual = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
+  //floatingPointEqual(result, 0.5);
+  closetest.close(actual, 0.5, maxDifference, true);
+  
 });
 
 test("convertRealComponent - delta equals newRotComponent size", function (assert) {
@@ -87,6 +92,15 @@ test("convertRealComponent - delta equals newRotComponent size", function (asser
   
   var result = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
   floatingPointEqual(result, 0);
+});
+
+test("convertRealComponent - regular case", function (assert) {
+  var newRotationComponent = 0.5;
+  // zero delta
+  var deltaComponent = 0.3;
+  
+  var result = RotationCalibrator.convertRealComponent(newRotationComponent, deltaComponent);
+  floatingPointEqual(result, 0.2);
 });
 
 test("convertRealMatrix - zero delta means no change", function (assert) {
@@ -109,6 +123,5 @@ test("convertRealMatrix - empty args", function (assert) {
   // no crash
   var expected = [];
   var actual = RotationCalibrator.convertRealMatrix(newMatrix, deltaMatrix);
-  
   deepEqual(actual, expected, true);
 });

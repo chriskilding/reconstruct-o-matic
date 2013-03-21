@@ -1,4 +1,6 @@
 var testrunner = require("qunit");
+//console.log(testrunner.options);
+testrunner.options.log.tests = false;
 
 // array of code and test files
 testrunner.run([
