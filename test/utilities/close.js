@@ -13,9 +13,20 @@
  * @param String message (optional)
  */
 function close(actual, expected, maxDifference, message) {
-	var passes = (actual === expected) || Math.abs(actual - expected) <= maxDifference;
+	var passes = isClose(actual, expected, maxDifference);
 	QUnit.push(passes, actual, expected, message);
 }
+
+// Just the true/false value, doesn't touch QUnit
+function isClose(actual, expected, maxDifference) {
+  return (actual === expected) || Math.abs(actual - expected) <= maxDifference;
+}
+
+// Just the true/false value, doesn't touch QUnit
+function isNotClose(actual, expected, minDifference) {
+  return Math.abs(actual - expected) > minDifference;
+}
+
 
 /**
  * Checks that the first two arguments are numbers with differences greater than the specified
@@ -29,7 +40,7 @@ function close(actual, expected, maxDifference, message) {
  * @param String message (optional)
  */
 function notClose(actual, expected, minDifference, message) {
-	var passes = Math.abs(actual - expected) > minDifference;
+	var passes = isNotClose(actual, expected, minDifference);
   QUnit.push(passes, actual, expected, message);
 }
 
@@ -39,11 +50,19 @@ function arrayClose(actual, expected, maxDifference, message) {
     ok(false, "actual and expected arrays not the same length");
   }
   else {
+    var allGood = true;
+    
     for (var i = 0; i < actual.length; i++) {
       var exp = expected[i];
       var act = actual[i];
-      close(act, exp, maxDifference, message);
+
+      if (!isClose(act, exp, maxDifference)) {
+        allGood = false;
+        break;
+      }
     }
+    
+    QUnit.push(allGood, actual, expected, message);
   }
 }
 

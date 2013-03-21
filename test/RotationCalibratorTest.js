@@ -113,7 +113,7 @@ test("convertRealMatrix - zero delta means no change", function (assert) {
   // no change
   var expected = realData;
   var actual = RotationCalibrator.convertRealMatrix(newMatrix, deltaMatrix);
-  
+    
   closetest.arrayClose(actual, expected, maxDifference, true);
 });
 
