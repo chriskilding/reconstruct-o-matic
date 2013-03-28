@@ -6,10 +6,10 @@ testrunner.options.log.tests = false;
 testrunner.run([
     {
         code: {
-          path: "lib/PositionCalibrator.js",
-          namespace: "PositionCalibrator"
+          path: "lib/RATPositionCalibrator.js",
+          namespace: "RATPositionCalibrator"
         },
-        tests: "test/PositionCalibratorTest.js"
+        tests: "test/RATPositionCalibratorTest.js"
     },
     {
         code: {
