@@ -8,6 +8,24 @@ QUnit.module("Triangles");
 
 // Tests using examples from http://www.mash.dept.shef.ac.uk/Resources/6_2scalarproduct.pdf
 
+test("degreesToRadians - sanity check", function (assert) {
+  // There are 2pi radians in a circle
+  var expected = 2 * Math.PI;
+  
+  var actual = Triangles.degreesToRadians(360);
+  
+  closetest.close(actual, expected, maxDifference, true);
+});
+
+test("radiansToDegrees - sanity check", function (assert) {
+  // There are pi radians in a semicircle
+  var expected = 180;
+  
+  var actual = Triangles.radiansToDegrees(Math.PI);
+  
+  closetest.close(actual, expected, maxDifference, true);
+});
+
 test("scalarProduct - matches worked example", function (assert) {
   // REMEMBER, JS maths uses RADIANS
   var rads = Triangles.degreesToRadians(30);
@@ -37,3 +55,12 @@ test("angleBetweenVectors - matches worked example", function (assert) {
   closetest.close(actual, 61.5, maxDifference, true);
 });
 
+test("cosineRule - matches 3-4-5 rule", function (assert) {
+  var a = 3;
+  var b = 4;
+  var theta = Triangles.degreesToRadians(90);
+
+  var actual = Triangles.cosineRule(a, b, theta);
+  
+  closetest.close(actual, 5, maxDifference, true);
+});
