@@ -1,5 +1,13 @@
 QUnit.module("PositionCalibrator");
 
+
+test("prepVector - basic test", function (assert) {
+  var input = [1, 1, 1];
+
+  var actual = PositionCalibrator.prepVector(input);
+  deepEqual(actual.elements, [-1, -1, -1], true);
+});
+
 test("distanceBetweenSensors - works with 3-4-5 rule", function (assert) {
   var referencePosition = [3, 3, 3];
   var otherPosition = [4, 4, 4];
