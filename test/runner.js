@@ -17,7 +17,15 @@ testrunner.run([
           namespace: "RotationCalibrator"
         },
         tests: "test/RotationCalibratorTest.js"
+    },
+    {
+        code: {
+          path: "lib/Triangles.js",
+          namespace: "Triangles"
+        },
+        tests: "test/TrianglesTest.js"
     }
+    
 ], function(err, report) {
     console.log(report);
 });
