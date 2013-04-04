@@ -31,8 +31,21 @@ testrunner.run([
           namespace: "Triangles"
         },
         tests: "test/TrianglesTest.js"
+    },
+    {
+        code: {
+          path: "lib/SkeletonCalibrator.js",
+          namespace: "SkeletonCalibrator"
+        },
+        tests: "test/SkeletonCalibratorTest.js"
+    },
+    {
+        code: {
+          path: "lib/Quaternion.js",
+          namespace: "Quaternion"
+        },
+        tests: "test/QuaternionTest.js"
     }
-    
 ], function(err, report) {
     console.log(report);
 });

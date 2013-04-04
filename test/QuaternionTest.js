@@ -70,21 +70,6 @@ test( "createFromAxisAngle", function() {
 	ok(Quaternion.equals(a, mult), true);
 });
 
-/*
-test( "setFromEuler/setEulerFromQuaternion", function() {
-
-	var angles = [ new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 1 ) ];
-
-	// ensure euler conversion to/from Quaternion matches.
-	for( var i = 0; i < orders.length; i ++ ) {
-		for( var j = 0; j < angles.length; j ++ ) {
-			var eulers2 = new THREE.Vector3().setEulerFromQuaternion( new THREE.Quaternion().setFromEuler( angles[j], orders[i] ), orders[i] );
-
-			ok( eulers2.distanceTo( angles[j] ) < 0.001, true );
-		}
-	}
-
-});*/
 
 /*test( "createFromEuler", function() {
 	// ensure euler conversion for Quaternion matches that of Matrix4
