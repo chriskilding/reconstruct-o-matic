@@ -131,20 +131,19 @@ test( "normalize/length/lengthSquared - part 1", function() {
 	ok(Quaternion.lengthSquared(normA) == 1, true);
 });
 
-/*test( "inverse/conjugate", function() {
-	var a = new THREE.Quaternion( x, y, z, w );
+test( "inverse/conjugate", function() {
+	var a = Quaternion.create( x, y, z, w );
 
 	// TODO: add better validation here.
-
-	var b = a.clone().conjugate();
-
+  
+	var b = Quaternion.conjugate(a);
 	ok( a.x == -b.x, true );
 	ok( a.y == -b.y, true );
-	ok( a.z == -b.z, true );
-	ok( a.w == b.w, true );
+	ok( a.z == -b.z, true );	
+  ok( a.w == b.w, true );
 });
 
-
+/*
 test( "multiplyQuaternions/multiply", function() {
 
 	var angles = [ new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 1 ) ];
