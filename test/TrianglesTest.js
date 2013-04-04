@@ -64,3 +64,23 @@ test("cosineRule - matches 3-4-5 rule", function (assert) {
   
   closetest.close(actual, 5, maxDifference, true);
 });
+
+test("pythagorasHyp - works with 3-4-5 rule", function (assert) {
+  var result = Triangles.pythagorasHypotenuse(3, 4);
+  equal(result, 5, true);
+});
+
+test("pythagorasHyp - doesn't crash with negative numbers", function (assert) {
+  var result = Triangles.pythagorasHypotenuse(-3, -4);
+  equal(result, 5, true);
+});
+
+test("pythagorasAdj - works with 3-4-5 rule", function (assert) {
+  var result = Triangles.pythagorasAdjacent(4, 5);
+  equal(result, 3, true);
+});
+
+test("pythagorasAdj - doesn't crash with negative numbers", function (assert) {
+  var result = Triangles.pythagorasAdjacent(-4, -5);
+  equal(result, 3, true);
+});
