@@ -8,17 +8,12 @@ QUnit.module("RotationCalibrator");
 // that's not a problem here,
 // just as long as the error stays below this threshold
 // NOTE: floating-point error means you can't use QUnit `equal`
-var maxFloatingPointErrorMargin, maxDifference = 0.000001;
+var maxDifference = 0.000001;
 
 // Some fixtures
 var realData = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
 var zeroesMatrix = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-function floatingPointEqual(actual, expected) {
-  var delta = Math.abs(actual - expected);
-  
-  ok(delta < maxFloatingPointErrorMargin, "floating-point actual value was acceptably close to the expected value");
-}
 
 test("diffBetweenComponents - identical values = no change", function (assert) {
   var refComponent = 0.5;
