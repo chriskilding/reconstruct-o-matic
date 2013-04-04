@@ -45,30 +45,32 @@ test("create - with args", function() {
 	ok( a.w === w, true);
 });
 
-/*test( "createFromAxisAngle", function() {
+test( "createFromAxisAngle", function() {
 
 	// TODO: find cases to validate.
-	ok( true, true );
+  
+	var zero = Quaternion.create();
 
-	var zero = new THREE.Quaternion();
+	var a = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, 0);
+	ok(Quaternion.equals(a, zero), true);
+  
+	var b = Quaternion.createFromAxisAngle({x: 0, y: 1, z: 0}, 0);
+	ok(Quaternion.equals(b, zero), true);
+  
+	var c = Quaternion.createFromAxisAngle({x: 0, y: 0, z: 1}, 0);
+	ok(Quaternion.equals(c, zero), true);
 
-	var a = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), 0 );
-	ok( a.equals( zero ), true );
-	a = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 0 );
-	ok( a.equals( zero ), true );
-	a = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 0, 0, 1 ), 0 );
-	ok( a.equals( zero ), true );
+	var a1 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, Math.PI);
+	ok(!Quaternion.equals(a, a1), true);
 
-	var b1 = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), Math.PI );
-	ok( ! a.equals( b1 ), true );
-	var b2 = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), -Math.PI );
-	ok( ! a.equals( b2 ), true );
+	var a2 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, -Math.PI);
+	ok(!Quaternion.equals(a, a2), true);
 
-	b1.multiply( b2 );
-	ok( a.equals( b1 ), true );
+	var mult = Quaternion.multiply(a1, a2);
+	ok(Quaternion.equals(a, mult), true);
 });
 
-
+/*
 test( "setFromEuler/setEulerFromQuaternion", function() {
 
 	var angles = [ new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 1 ) ];
