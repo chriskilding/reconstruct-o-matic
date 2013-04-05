@@ -12,27 +12,46 @@ test("rotationDelta - identical values = no change", function (assert) {
   var otherMatrix = Fixtures.real3x3;
 
   // idealised delta quaternion
+  // without floating point errors
   // which causes no change in any direction
   var expected = { x: 0, y: 0, z: 0, w: 1 };
   
   var actual = RotationCalibrator.rotationDelta(refMatrix, otherMatrix);
   
+  // Should be no change!
   closetest.arrayClose(actual, expected, Fixtures.maxDifference, true);
 });
 
-/*test("rotationDelta - all zeroes", function (assert) {
-  // all zeroes should be handled fine
-  var refMatrix = Fixtures.zeroes3x3;
-  // the same
-  var otherMatrix = Fixtures.zeroes3x3;
-  // no change
-  var expected = Fixtures.zeroes3x3;
-  var actual = RotationCalibrator.rotationDelta(refMatrix, otherMatrix);
+test("convertRealData - zero delta means no change", function (assert) {
+  // some real data
+  var newQuat = RotationCalibrator.prepMatrix(Fixtures.real3x3);
   
-  deepEqual(actual, expected, true);
+  // idealised zero delta quaternion
+  var deltaQuat = { x: 0, y: 0, z: 0, w: 1 };
+    
+  var actual = RotationCalibrator.convertRealData(newQuat, deltaQuat);
+  var expected = Fixtures.real3x3;
+  
+  // should be no change
+  closetest.arrayClose(actual, expected, Fixtures.maxDifference, true);
 });
 
-/*test("rotationDelta - empty args", function (assert) {
+test("prepMatrix - sanity check", function (assert) {
+  // a real Kinect data sample
+  var matrix = Fixtures.real3x3;
+
+  // this is a temp placeholder
+  // FIXME need to manually calculate what the expected quat should be
+  var expected = { x: 0, y: 0, z: 0, w: 1 };
+  
+  var actual = RotationCalibrator.prepMatrix(matrix);
+  
+  // Should be no change!
+  deepEqual(actual, expected, Fixtures.maxDifference, true);
+});
+
+/*
+test("rotationDelta - empty args", function (assert) {
   // an empty array should be handled fine
   var refMatrix = [];
   // doesn't have to be the same
@@ -42,18 +61,6 @@ test("rotationDelta - identical values = no change", function (assert) {
   var actual = RotationCalibrator.rotationDeltaMatrix(refMatrix, otherMatrix);
   
   deepEqual(actual, expected, true);
-});
-
-test("convertRealData - zero delta means no change", function (assert) {
-  // some real data
-  var newMatrix = realData;
-  // zero delta
-  var deltaMatrix = zeroesMatrix;
-  // no change
-  var expected = realData;
-  var actual = RotationCalibrator.convertRealMatrix(newMatrix, deltaMatrix);
-    
-  closetest.arrayClose(actual, expected, maxDifference, true);
 });
 
 test("convertRealData - empty args", function (assert) {
