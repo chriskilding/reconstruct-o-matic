@@ -7,21 +7,28 @@
 QUnit.module("Quaternion");
 
 var closetest = require("./utilities/close");
-var maxDifference = 0.000001;
+const maxDifference = 0.000001;
 
 
-var orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
-var eulerAngles = {
+const orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
+const eulerAngles = {
   x: 0.1,
   y: -0.3,
   z: 0.25
 };
-var x = 2;
-var y = 3;
-var z = 4;
-var w = 5;
+const x = 2;
+const y = 3;
+const z = 4;
+const w = 5;
 
-var realData = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
+const real3x3 = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
+
+const real4x4 = [
+  0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0,
+  0.1306413114070892,  0.9723015427589417,   0.1938103586435318, 0,
+  0.3749079704284668, -0.2294186502695084,   0.8982265591621399, 0,
+  0, 0, 0, 1
+];
 
 /*var qSub = function ( a, b ) {
 	var result = Quaternion.create(a);
@@ -78,14 +85,33 @@ test( "createFromAxisAngle", function() {
 });
 
 test("to and from rotation matrix", function() {
-  var mat = Quaternion.expandMatrix(realData);
+  var mat = Quaternion.expandMatrix(real3x3);
 	
   var quat = Quaternion.createFromRotationMatrix(mat);
   
   var back = Quaternion.quaternionToMatrix(quat);
 	
-  closetest.arrayClose(back, realData, maxDifference, true);
+  closetest.arrayClose(back, real3x3, maxDifference, true);
   
+});
+
+test("expandMatrix - basic scenario", function() {
+  var actual = Quaternion.expandMatrix(real3x3);
+
+  deepEqual(actual, real4x4, true);
+});
+
+test("contractMatrix - basic scenario", function() {
+  var actual = Quaternion.contractMatrix(real4x4);
+
+  deepEqual(actual, real3x3, true);
+});
+
+test("expand then contract Matrix", function() {
+  var expanded = Quaternion.expandMatrix(real3x3);
+  var contracted = Quaternion.contractMatrix(expanded);
+
+  deepEqual(contracted, real3x3, true);
 });
 
 /*test( "createFromEuler", function() {
