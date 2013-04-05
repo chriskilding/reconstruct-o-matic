@@ -6,6 +6,10 @@
 
 QUnit.module("Quaternion");
 
+var closetest = require("./utilities/close");
+var maxDifference = 0.000001;
+
+
 var orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
 var eulerAngles = {
   x: 0.1,
@@ -79,7 +83,9 @@ test("to and from rotation matrix", function() {
   var quat = Quaternion.createFromRotationMatrix(mat);
   
   var back = Quaternion.quaternionToMatrix(quat);
-	deepEqual(back, realData, true);
+	
+  closetest.arrayClose(back, realData, maxDifference, true);
+  
 });
 
 /*test( "createFromEuler", function() {
