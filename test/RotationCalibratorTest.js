@@ -71,17 +71,33 @@ test("calibrateRotation - simulate sensors next to each other", function (assert
   var refMatrix = Fixtures.real3x3;
   // the same again
   var otherMatrix = Fixtures.real3x3;
-  
-  // idealised zero delta quaternion
-  //var deltaQuat = { x: 0, y: 0, z: 0, w: 1 };
     
   // And the calibration function is returned
   var actualFunc = RotationCalibrator.calibrateRotation(refMatrix, otherMatrix);
   
-  // And some data rolls in...
+  // And some new data rolls in...
   var actualResult = actualFunc(newRotation);
   var expected = newRotation;
   
   // should be no change
   closetest.arrayClose(actualResult, expected, Fixtures.maxDifference, true);
+});
+
+// As if sensors were opposite each other
+test("calibrateRotation - simulate sensors opposite each other", function (assert) {
+  /*// some real data
+  var refMatrix = Fixtures.real3x3;
+  // the same again
+  var otherMatrix = Fixtures.real3x3;
+    
+  // And the calibration function is returned
+  var actualFunc = RotationCalibrator.calibrateRotation(refMatrix, otherMatrix);
+  
+  // And some new data rolls in...
+  var actualResult = actualFunc(newRotation);
+  var expected = newRotation;
+  
+  // should be no change
+  closetest.arrayClose(actualResult, expected, Fixtures.maxDifference, true);*/
+  ok(false, "FIXME - implement this test!");
 });
