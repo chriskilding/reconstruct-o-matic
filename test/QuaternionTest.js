@@ -16,6 +16,9 @@ var x = 2;
 var y = 3;
 var z = 4;
 var w = 5;
+
+var realData = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
+
 /*var qSub = function ( a, b ) {
 	var result = Quaternion.create(a);
 	result.copy( a );
@@ -70,6 +73,14 @@ test( "createFromAxisAngle", function() {
 	ok(Quaternion.equals(a, mult), true);
 });
 
+test("to and from rotation matrix", function() {
+  var mat = Quaternion.expandMatrix(realData);
+	
+  var quat = Quaternion.createFromRotationMatrix(mat);
+  
+  var back = Quaternion.quaternionToMatrix(quat);
+	deepEqual(back, realData, true);
+});
 
 /*test( "createFromEuler", function() {
 	// ensure euler conversion for Quaternion matches that of Matrix4
