@@ -1,6 +1,21 @@
 // Bring in plugins
 const closetest = require("./utilities/close");
 
+// One more fixture
+// just acts as 'another reading'
+// that comes in after the calibration phase
+const newRotation = [
+  0.5315466523170471,
+  -0.2101487815380096,
+  -0.8205456733703613,
+  0.06045396253466606,
+  0.9756764769554138,
+  -0.210717648267746,
+  0.8448686599731445,
+  0.06240064650774002,
+  0.5313219428062439
+];
+
 QUnit.module("RotationCalibrator");
 
 // This test is covered in lower-level detail by
@@ -50,26 +65,23 @@ test("prepMatrix - sanity check", function (assert) {
   deepEqual(actual, expected, Fixtures.maxDifference, true);
 });
 
-/*
-test("rotationDelta - empty args", function (assert) {
-  // an empty array should be handled fine
-  var refMatrix = [];
-  // doesn't have to be the same
-  var otherMatrix = [];
-  // no crash
-  var expected = [];
-  var actual = RotationCalibrator.rotationDeltaMatrix(refMatrix, otherMatrix);
+// Zero delta, as if both sensors were right next to each other
+test("calibrateRotation - simulate sensors next to each other", function (assert) {
+  // some real data
+  var refMatrix = Fixtures.real3x3;
+  // the same again
+  var otherMatrix = Fixtures.real3x3;
   
-  deepEqual(actual, expected, true);
+  // idealised zero delta quaternion
+  //var deltaQuat = { x: 0, y: 0, z: 0, w: 1 };
+    
+  // And the calibration function is returned
+  var actualFunc = RotationCalibrator.calibrateRotation(refMatrix, otherMatrix);
+  
+  // And some data rolls in...
+  var actualResult = actualFunc(newRotation);
+  var expected = newRotation;
+  
+  // should be no change
+  closetest.arrayClose(actualResult, expected, Fixtures.maxDifference, true);
 });
-
-test("convertRealData - empty args", function (assert) {
-  // an empty array should be handled fine
-  var newMatrix = [];
-  // doesn't have to be the same
-  var deltaMatrix = [];
-  // no crash
-  var expected = [];
-  var actual = RotationCalibrator.convertRealMatrix(newMatrix, deltaMatrix);
-  deepEqual(actual, expected, true);
-});*/

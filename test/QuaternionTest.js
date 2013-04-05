@@ -86,6 +86,9 @@ test("to and from rotation matrix", function() {
   
 });
 
+// Sometimes zig.js throws out rotation matrices with 9 zeroes in them
+// so what happens then?
+// FIXME correct this test
 test("createFromRotationMatrix - all zeroes", function() {
   var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(Fixtures.zeroes4x4));
   
