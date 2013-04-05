@@ -19,6 +19,10 @@ testrunner.run([
         tests: "test/PositionCalibratorTest.js"
     },
     {
+        deps: {
+          path: "test/Fixtures.js",
+          namespace: "Fixtures"
+        },
         code: {
           path: "lib/RotationCalibrator.js",
           namespace: "RotationCalibrator"
@@ -40,11 +44,15 @@ testrunner.run([
         tests: "test/SkeletonCalibratorTest.js"
     },*/
     {
-        code: {
-          path: "lib/Quaternion.js",
-          namespace: "Quaternion"
-        },
-        tests: "test/QuaternionTest.js"
+      deps: {
+        path: "test/Fixtures.js",
+        namespace: "Fixtures"
+      },
+      code: {
+        path: "lib/Quaternion.js",
+        namespace: "Quaternion"
+      },
+      tests: "test/QuaternionTest.js"
     }
 ], function(err, report) {
     console.log(report);

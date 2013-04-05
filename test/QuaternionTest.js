@@ -7,8 +7,6 @@
 QUnit.module("Quaternion");
 
 var closetest = require("./utilities/close");
-const maxDifference = 0.000001;
-
 
 const orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
 const eulerAngles = {
@@ -21,27 +19,7 @@ const y = 3;
 const z = 4;
 const w = 5;
 
-const real3x3 = [0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0.1306413114070892, 0.9723015427589417, 0.1938103586435318, 0.3749079704284668, -0.2294186502695084, 0.8982265591621399];
 
-const real4x4 = [
-  0.9178107380867004, -0.04468444734811783, -0.3944951295852661, 0,
-  0.1306413114070892,  0.9723015427589417,   0.1938103586435318, 0,
-  0.3749079704284668, -0.2294186502695084,   0.8982265591621399, 0,
-  0, 0, 0, 1
-];
-
-const zeroes3x3 = [
-  0, 0, 0,
-  0, 0, 0,
-  0, 0, 0
-];
-
-const zeroes4x4 = [
-  0, 0, 0, 0,
-  0, 0, 0, 0,
-  0, 0, 0, 0,
-  0, 0, 0, 1
-];
 
 /*var qSub = function ( a, b ) {
 	var result = Quaternion.create(a);
@@ -98,39 +76,39 @@ test( "createFromAxisAngle", function() {
 });
 
 test("to and from rotation matrix", function() {
-  var mat = Quaternion.expandMatrix(real3x3);
+  var mat = Quaternion.expandMatrix(Fixtures.real3x3);
 	
   var quat = Quaternion.createFromRotationMatrix(mat);
   
   var back = Quaternion.quaternionToMatrix(quat);
 	
-  closetest.arrayClose(back, real3x3, maxDifference, true);
+  closetest.arrayClose(back, Fixtures.real3x3, Fixtures.maxDifference, true);
   
 });
 
 test("createFromRotationMatrix - all zeroes", function() {
-  var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(zeroes4x4));
+  var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(Fixtures.zeroes4x4));
   
-  deepEqual(actual, real4x4, true);
+  deepEqual(actual, Fixtures.real4x4, true);
 });
 
 test("expandMatrix - basic scenario", function() {
-  var actual = Quaternion.expandMatrix(real3x3);
+  var actual = Quaternion.expandMatrix(Fixtures.real3x3);
 
-  deepEqual(actual, real4x4, true);
+  deepEqual(actual, Fixtures.real4x4, true);
 });
 
 test("contractMatrix - basic scenario", function() {
-  var actual = Quaternion.contractMatrix(real4x4);
+  var actual = Quaternion.contractMatrix(Fixtures.real4x4);
 
-  deepEqual(actual, real3x3, true);
+  deepEqual(actual, Fixtures.real3x3, true);
 });
 
 test("expand then contract Matrix", function() {
-  var expanded = Quaternion.expandMatrix(real3x3);
+  var expanded = Quaternion.expandMatrix(Fixtures.real3x3);
   var contracted = Quaternion.contractMatrix(expanded);
 
-  deepEqual(contracted, real3x3, true);
+  deepEqual(contracted, Fixtures.real3x3, true);
 });
 
 // This steps through the low level maths
@@ -142,7 +120,7 @@ test("multiply - apply a quaternion of no change", function() {
   var delta = { x: 0, y: 0, z: 0, w: 1 };
 
   // adapt the real 4x4 data to a quaternion
-  var quat1 = Quaternion.createFromRotationMatrix(real4x4);
+  var quat1 = Quaternion.createFromRotationMatrix(Fixtures.real4x4);
   
   // multiply the quaternions to yield the transformation
   var mult = Quaternion.multiply(quat1, delta);
@@ -152,7 +130,7 @@ test("multiply - apply a quaternion of no change", function() {
   
   // The adjusted matrix should be no different to the original!
   // (Floating point errors excepted)
-  closetest.arrayClose(out, real3x3, maxDifference, true);
+  closetest.arrayClose(out, Fixtures.real3x3, Fixtures.maxDifference, true);
 });
 
 /*test( "createFromEuler", function() {
