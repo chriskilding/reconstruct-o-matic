@@ -18,13 +18,13 @@ testrunner.run([
         },
         tests: "test/PositionCalibratorTest.js"
     },
-    /*{
+    {
         code: {
           path: "lib/RotationCalibrator.js",
           namespace: "RotationCalibrator"
         },
         tests: "test/RotationCalibratorTest.js"
-    },*/
+    },
     {
         code: {
           path: "lib/Triangles.js",

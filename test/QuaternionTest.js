@@ -30,6 +30,19 @@ const real4x4 = [
   0, 0, 0, 1
 ];
 
+const zeroes3x3 = [
+  0, 0, 0,
+  0, 0, 0,
+  0, 0, 0
+];
+
+const zeroes4x4 = [
+  0, 0, 0, 0,
+  0, 0, 0, 0,
+  0, 0, 0, 0,
+  0, 0, 0, 1
+];
+
 /*var qSub = function ( a, b ) {
 	var result = Quaternion.create(a);
 	result.copy( a );
@@ -95,6 +108,12 @@ test("to and from rotation matrix", function() {
   
 });
 
+test("createFromRotationMatrix - all zeroes", function() {
+  var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(zeroes4x4));
+  
+  deepEqual(actual, real4x4, true);
+});
+
 test("expandMatrix - basic scenario", function() {
   var actual = Quaternion.expandMatrix(real3x3);
 
@@ -112,6 +131,28 @@ test("expand then contract Matrix", function() {
   var contracted = Quaternion.contractMatrix(expanded);
 
   deepEqual(contracted, real3x3, true);
+});
+
+// This steps through the low level maths
+// behind one of the RotationCalibrator's functions
+test("multiply - apply a quaternion of no change", function() {
+  // a real example once gave
+  // { x: -1.5612511283791264e-17, y: 0, z: 0, w: 0.9999999621423682 }
+  // which is nigh on...
+  var delta = { x: 0, y: 0, z: 0, w: 1 };
+
+  // adapt the real 4x4 data to a quaternion
+  var quat1 = Quaternion.createFromRotationMatrix(real4x4);
+  
+  // multiply the quaternions to yield the transformation
+  var mult = Quaternion.multiply(quat1, delta);
+  
+  // finally turn back into a 3x3 matrix
+  var out = Quaternion.quaternionToMatrix(mult);
+  
+  // The adjusted matrix should be no different to the original!
+  // (Floating point errors excepted)
+  closetest.arrayClose(out, real3x3, maxDifference, true);
 });
 
 /*test( "createFromEuler", function() {
