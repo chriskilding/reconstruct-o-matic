@@ -21,3 +21,31 @@ exports.zeroes4x4 = [
 ];
 
 exports.maxDifference = 0.000001;
+
+exports.zeroRotation = {
+  w: 1,
+  x: 0,
+  y: 0,
+  z: 0
+};
+
+exports.zRotation90 = {
+  w: 1,
+  x: 0,
+  y: 0,
+  z: 1
+};
+
+exports.zRotation180 = {
+  w: 0,
+  x: 0,
+  y: 0,
+  z: 1
+};
+
+exports.zRotation270 = {
+  w: 1,
+  x: 0,
+  y: 0,
+  z: -1
+};

@@ -53,6 +53,17 @@ testrunner.run([
         namespace: "Quaternion"
       },
       tests: "test/QuaternionTest.js"
+    },
+    {
+      deps: {
+        path: "test/Fixtures.js",
+        namespace: "Fixtures"
+      },
+      code: {
+        path: "lib/Vector3.js",
+        namespace: "Vector3"
+      },
+      tests: "test/Vector3Test.js"
     }
 ], function(err, report) {
     console.log(report);
