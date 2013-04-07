@@ -22,6 +22,8 @@ exports.zeroes4x4 = [
 
 exports.maxDifference = 0.000001;
 
+// These rotations adapted from
+// http://wiki.alioth.net/index.php/Quaternion
 exports.zeroRotation = {
   w: 1,
   x: 0,
