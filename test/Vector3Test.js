@@ -2,6 +2,45 @@ QUnit.module("Vector3");
 
 var closetest = require("./utilities/close");
 
+test("add - simple case", 1, function() {
+  const a = [1, 1, 1];
+  const b = [2, 2, 2];
+  
+  deepEqual(Vector3.add(a, b), [3, 3, 3], true);
+});
+
+test("divideByValue - simple case", 1, function() {
+  const a = [6, 6, 6];
+  
+  deepEqual(Vector3.divideByValue(a, 3), [2, 2, 2], true);
+});
+
+test("addVectors - simple case", 1, function() {
+  const arr = [
+    [6, 6, 6],
+    [4, 4, 4],
+    [5, 5, 5]
+  ];
+  
+  const actual = Vector3.addVectors(arr);
+  const expected = [15, 15, 15];
+  
+  deepEqual(actual, expected, true);
+});
+
+test("averageOfVectors - simple case", 1, function() {
+  const arr = [
+    [2, 2, 2],
+    [4, 4, 4],
+    [6, 6, 6]
+  ];
+  
+  const actual = Vector3.averageOfVectors(arr);
+  const expected = [4, 4, 4];
+  
+  deepEqual(actual, expected, true);
+});
+
 test("applyQuaternion - no delta = no change", 3, function() {
   var delta = { x: 0, y: 0, z: 0, w: 1 };
   
