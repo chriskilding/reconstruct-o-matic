@@ -95,25 +95,6 @@ test("createFromRotationMatrix - all zeroes", function() {
   deepEqual(actual, Fixtures.real4x4, true);
 });
 
-test("expandMatrix - basic scenario", function() {
-  var actual = Quaternion.expandMatrix(Fixtures.real3x3);
-
-  deepEqual(actual, Fixtures.real4x4, true);
-});
-
-test("contractMatrix - basic scenario", function() {
-  var actual = Quaternion.contractMatrix(Fixtures.real4x4);
-
-  deepEqual(actual, Fixtures.real3x3, true);
-});
-
-test("expand then contract Matrix", function() {
-  var expanded = Quaternion.expandMatrix(Fixtures.real3x3);
-  var contracted = Quaternion.contractMatrix(expanded);
-
-  deepEqual(contracted, Fixtures.real3x3, true);
-});
-
 // This steps through the low level maths
 // behind one of the RotationCalibrator's functions
 test("multiply - apply a quaternion of no change", function() {
