@@ -16,39 +16,58 @@ function isReference(roomId, clientSocketId) {
     return io.sockets.clients(roomId)[0].id === clientSocketId;
 }
 
+// This gets called every time real data comes from client
+// to stop JS from creating a new instance of the function on every push
+// (which would eat up memory fast!)
+// this has been extracted out into a single named function
+function broadcastFinalSkeleton(roomId, reconstructed) {
+    // And tell the room about it
+    // INCLUDING THE CLIENT THAT SENT THE DATA
+    io.sockets.in(roomId).emit('response', reconstructed);
+}
+
 io.sockets.on('connection', function (socket) {
     // We need some way to uniquely identify each client
     // socket.io client id is the socket.id - that'll do
     var syncedClient = new SyncedClient(socket.id, isReference);
     
-    // Received calibration data from client
-    socket.on('calibrate', function (data) {
-        syncedClient.calibrate(data);
-    });
-    
     // Received 'real' data from a client
-    socket.on('request', function (data) {
-        syncedClient.pushRealData(data, function (roomId, reconstructed) {
-            // And tell the room about it
-            // INCLUDING THE CLIENT THAT SENT THE DATA
-            io.sockets.in(roomId).emit('response', reconstructed);
-        });
-    });
+    var onreq = function (data) {
+        syncedClient.pushRealData(data, broadcastFinalSkeleton);
+    };
+    
+    // Received calibration data from client
+    var oncalibrate = function (data) {
+        console.log('calibrating', socket.id);
+        syncedClient.calibrate(data);
+    };
     
     // Client setting its 'sharing code' to team up with another  
-    socket.on('subscribe', function (roomId) {
+    var onsub = function (roomId) {
         console.log('client joined room', roomId);
         socket.join(roomId);
         syncedClient.joinRoom(roomId);
-    });
+    };
     
-    socket.on('unsubscribe', function (roomId) {
+    // Client leaving 1 room (but not totally disconnecting)
+    var onunsub = function (roomId) {
+        console.log('leaving room', roomId);
         socket.leave(roomId);
         syncedClient.leaveRoom(roomId);
-    });
+    };
     
-    socket.on('disconnect', function () {
-        console.log('User disconnected: ' + socket.id);
+    var ondisconn = function () {
+        console.log('User disconnected: ' + this.clientId);
         syncedClient.terminate();
-    });
+    };
+    
+    socket.on('calibrate', oncalibrate);
+    
+    socket.on('request', onreq);
+    
+    socket.on('subscribe', onsub);
+    
+    socket.on('unsubscribe', onunsub);
+    
+    socket.on('disconnect', ondisconn);
 });
