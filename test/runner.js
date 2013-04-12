@@ -1,3 +1,6 @@
+/*jslint node: true */
+"use strict";
+
 var testrunner = require("qunit");
 //console.log(testrunner.options);
 testrunner.options.log.tests = false;
@@ -6,33 +9,33 @@ testrunner.options.log.tests = false;
 testrunner.run([
     {
         code: {
-          path: "lib/RATPositionCalibrator.js",
-          namespace: "RATPositionCalibrator"
+            path: "lib/RATPositionCalibrator.js",
+            namespace: "RATPositionCalibrator"
         },
         tests: "test/RATPositionCalibratorTest.js"
     },
     {
         code: {
-          path: "lib/PositionCalibrator.js",
-          namespace: "PositionCalibrator"
+            path: "lib/PositionCalibrator.js",
+            namespace: "PositionCalibrator"
         },
         tests: "test/PositionCalibratorTest.js"
     },
     {
         deps: {
-          path: "test/Fixtures.js",
-          namespace: "Fixtures"
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
         },
         code: {
-          path: "lib/RotationCalibrator.js",
-          namespace: "RotationCalibrator"
+            path: "lib/RotationCalibrator.js",
+            namespace: "RotationCalibrator"
         },
         tests: "test/RotationCalibratorTest.js"
     },
     {
         code: {
-          path: "lib/Triangles.js",
-          namespace: "Triangles"
+            path: "lib/Triangles.js",
+            namespace: "Triangles"
         },
         tests: "test/TrianglesTest.js"
     },
@@ -44,27 +47,27 @@ testrunner.run([
         tests: "test/SkeletonCalibratorTest.js"
     },*/
     {
-      deps: {
-        path: "test/Fixtures.js",
-        namespace: "Fixtures"
-      },
-      code: {
-        path: "lib/Quaternion.js",
-        namespace: "Quaternion"
-      },
-      tests: "test/QuaternionTest.js"
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
+        code: {
+            path: "lib/Quaternion.js",
+            namespace: "Quaternion"
+        },
+        tests: "test/QuaternionTest.js"
     },
     {
-      deps: {
-        path: "test/Fixtures.js",
-        namespace: "Fixtures"
-      },
-      code: {
-        path: "lib/Vector3.js",
-        namespace: "Vector3"
-      },
-      tests: "test/Vector3Test.js"
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
+        code: {
+            path: "lib/Vector3.js",
+            namespace: "Vector3"
+        },
+        tests: "test/Vector3Test.js"
     }
-], function(err, report) {
+], function (err, report) {
     console.log(report);
 });
