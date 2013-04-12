@@ -1,3 +1,6 @@
+/*jslint node: true */
+"use strict";
+
 QUnit.module("Matrix");
 
 test("expandMatrix - basic scenario", function() {

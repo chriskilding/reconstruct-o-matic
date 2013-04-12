@@ -1,3 +1,6 @@
+/*jslint node: true */
+"use strict";
+
 // Adapted from the Three.js unit tests for the same module
 
 /**
@@ -8,16 +11,16 @@ QUnit.module("Quaternion");
 
 var closetest = require("./utilities/close");
 
-const orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
-const eulerAngles = {
-  x: 0.1,
-  y: -0.3,
-  z: 0.25
+var orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
+var eulerAngles = {
+    x: 0.1,
+    y: -0.3,
+    z: 0.25
 };
-const x = 2;
-const y = 3;
-const z = 4;
-const w = 5;
+var x = 2;
+var y = 3;
+var z = 4;
+var w = 5;
 
 
 
@@ -34,87 +37,87 @@ const w = 5;
 
 };*/
 
-test("create - no args", function() {
+test("create - no args", 4, function () {
 	var a = Quaternion.create();
-	ok( a.x == 0, true);
-	ok( a.y == 0, true);
-	ok( a.z == 0, true);
-	ok( a.w == 1, true);
+	equal(a.x, 0, true);
+	equal(a.y, 0, true);
+	equal(a.z, 0, true);
+	equal(a.w, 1, true);
 });
 
-test("create - with args", function() {
-	var a = Quaternion.create( x, y, z, w );
-	ok( a.x === x, true);
-	ok( a.y === y, true);
-	ok( a.z === z, true);
-	ok( a.w === w, true);
+test("create - with args", 4, function () {
+	var a = Quaternion.create(x, y, z, w);
+	equal(a.x, x, true);
+	equal(a.y, y, true);
+	equal(a.z, z, true);
+	equal(a.w, w, true);
 });
 
-test( "createFromAxisAngle", function() {
+test("createFromAxisAngle", function () {
 
 	// TODO: find cases to validate.
   
 	var zero = Quaternion.create();
 
-	var a = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, 0);
-	ok(Quaternion.equals(a, zero), true);
+	var a = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, 0),
+        b = Quaternion.createFromAxisAngle({x: 0, y: 1, z: 0}, 0),
+        c = Quaternion.createFromAxisAngle({x: 0, y: 0, z: 1}, 0),
+        a1 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, Math.PI),
+        a2 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, -Math.PI),
+        mult = Quaternion.multiply(a1, a2);
+
+    ok(Quaternion.equals(a, zero), true);
   
-	var b = Quaternion.createFromAxisAngle({x: 0, y: 1, z: 0}, 0);
 	ok(Quaternion.equals(b, zero), true);
   
-	var c = Quaternion.createFromAxisAngle({x: 0, y: 0, z: 1}, 0);
 	ok(Quaternion.equals(c, zero), true);
 
-	var a1 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, Math.PI);
 	ok(!Quaternion.equals(a, a1), true);
 
-	var a2 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, -Math.PI);
 	ok(!Quaternion.equals(a, a2), true);
 
-	var mult = Quaternion.multiply(a1, a2);
 	ok(Quaternion.equals(a, mult), true);
 });
 
 test("to and from rotation matrix", function() {
-  var mat = Quaternion.expandMatrix(Fixtures.real3x3);
-	
-  var quat = Quaternion.createFromRotationMatrix(mat);
-  
-  var back = Quaternion.quaternionToMatrix(quat);
-	
-  closetest.arrayClose(back, Fixtures.real3x3, Fixtures.maxDifference, true);
+    var mat = Quaternion.expandMatrix(Fixtures.real3x3);
+    
+    var quat = Quaternion.createFromRotationMatrix(mat);
+    
+    var back = Quaternion.quaternionToMatrix(quat);
+    
+    closetest.arrayClose(back, Fixtures.real3x3, Fixtures.maxDifference, true);
   
 });
 
 // Sometimes zig.js throws out rotation matrices with 9 zeroes in them
 // so what happens then?
 // FIXME correct this test
-test("createFromRotationMatrix - all zeroes", function() {
-  var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(Fixtures.zeroes4x4));
-  
-  deepEqual(actual, Fixtures.real4x4, true);
+test("createFromRotationMatrix - all zeroes", 1, function (assert) {
+    var actual = Quaternion.quaternionToMatrix(Quaternion.createFromRotationMatrix(Fixtures.zeroes4x4));
+    assert.deepEqual(actual, Fixtures.real4x4, true);
 });
 
 // This steps through the low level maths
 // behind one of the RotationCalibrator's functions
-test("multiply - apply a quaternion of no change", function() {
-  // a real example once gave
-  // { x: -1.5612511283791264e-17, y: 0, z: 0, w: 0.9999999621423682 }
-  // which is nigh on...
-  var delta = { x: 0, y: 0, z: 0, w: 1 };
-
-  // adapt the real 4x4 data to a quaternion
-  var quat1 = Quaternion.createFromRotationMatrix(Fixtures.real4x4);
-  
-  // multiply the quaternions to yield the transformation
-  var mult = Quaternion.multiply(quat1, delta);
-  
-  // finally turn back into a 3x3 matrix
-  var out = Quaternion.quaternionToMatrix(mult);
-  
-  // The adjusted matrix should be no different to the original!
-  // (Floating point errors excepted)
-  closetest.arrayClose(out, Fixtures.real3x3, Fixtures.maxDifference, true);
+test("multiply - apply a quaternion of no change", 1, function () {
+    // a real example once gave
+    // { x: -1.5612511283791264e-17, y: 0, z: 0, w: 0.9999999621423682 }
+    // which is nigh on...
+    var delta = { x: 0, y: 0, z: 0, w: 1 };
+    
+    // adapt the real 4x4 data to a quaternion
+    var quat1 = Quaternion.createFromRotationMatrix(Fixtures.real4x4);
+    
+    // multiply the quaternions to yield the transformation
+    var mult = Quaternion.multiply(quat1, delta);
+    
+    // finally turn back into a 3x3 matrix
+    var out = Quaternion.quaternionToMatrix(mult);
+    
+    // The adjusted matrix should be no different to the original!
+    // (Floating point errors excepted)
+    closetest.arrayClose(out, Fixtures.real3x3, Fixtures.maxDifference, true);
 });
 
 /*test( "createFromEuler", function() {
@@ -138,40 +141,38 @@ test("multiply - apply a quaternion of no change", function() {
 	});
 });*/
 
-test( "normalize/length/lengthSquared - part 1", function() {
-	var a = Quaternion.create(x, y, z, w);
-
-	ok(Quaternion.length(a) != 1, true);
-	ok(Quaternion.lengthSquared(a) != 1, true);
-	
-  var normA = Quaternion.normalize(a);
-  
-	ok(Quaternion.length(normA) == 1, true);
-	ok(Quaternion.lengthSquared(normA) == 1, true);
+test("normalize/length/lengthSquared - part 1", 4, function () {
+    var a = Quaternion.create(x, y, z, w);
+    
+    notEqual(Quaternion.length(a), 1, true);
+    notEqual(Quaternion.lengthSquared(a), 1, true);
+    
+    var normA = Quaternion.normalize(a);
+    
+    equal(Quaternion.length(normA), 1, true);
+    equal(Quaternion.lengthSquared(normA), 1, true);
 });
 
-test( "normalize/length/lengthSquared - part 1", function() {
-	var a = Quaternion.create(0, 0, 0, 0);
+test( "normalize/length/lengthSquared - part 1", 4, function () {
+    var a = Quaternion.create(0, 0, 0, 0),
+        normA = Quaternion.normalize(a);
 
-	ok(Quaternion.length(a) == 0, true);
-	ok(Quaternion.lengthSquared(a) == 0, true);
-	
-  var normA = Quaternion.normalize(a);
-  
-	ok(Quaternion.length(normA) == 1, true);
-	ok(Quaternion.lengthSquared(normA) == 1, true);
+    equal(Quaternion.length(a), 0, true);
+    equal(Quaternion.lengthSquared(a), 0, true);
+    equal(Quaternion.length(normA), 1, true);
+    equal(Quaternion.lengthSquared(normA), 1, true);
 });
 
-test( "inverse/conjugate", function() {
-	var a = Quaternion.create( x, y, z, w );
-
-	// TODO: add better validation here.
-  
-	var b = Quaternion.conjugate(a);
-	ok( a.x == -b.x, true );
-	ok( a.y == -b.y, true );
-	ok( a.z == -b.z, true );	
-  ok( a.w == b.w, true );
+test( "inverse/conjugate", 4, function () {
+    var a = Quaternion.create(x, y, z, w);
+    
+    // TODO: add better validation here.
+    
+    var b = Quaternion.conjugate(a);
+    equal(a.x, -b.x, true);
+    equal(a.y, -b.y, true);
+    equal(a.z, -b.z, true);	
+    equal(a.w, b.w, true);
 });
 
 /*
@@ -217,13 +218,13 @@ test( "multiplyVector3", function() {
 });*/
 
 test("equals", function() {
-	var a = Quaternion.create( x, y, z, w );
-	var b = Quaternion.create( -x, -y, -z, -w );
+	var a = Quaternion.create(x, y, z, w);
+	var b = Quaternion.create(-x, -y, -z, -w);
 	
-	ok( a.x != b.x, true );
-	ok( a.y != b.y, true );
+	notEqual(a.x, b.x, true);
+	notEqual(a.y, b.y, true);
 
-	ok(!Quaternion.equals(a, b), true );
-	ok(!Quaternion.equals(b, a), true );
+	ok(!Quaternion.equals(a, b), true);
+	ok(!Quaternion.equals(b, a), true);
 
 });
