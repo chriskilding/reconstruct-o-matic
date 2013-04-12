@@ -26,7 +26,7 @@ test("calibratePosition - basic scenario", function (assert) {
     var actual = func(otherReal);
     
     // Just like it came from the primary sensor
-    deepEqual(actual, [5, 3, 5], true);
+    assert.deepEqual(actual, [5, 3, 5], true);
     
     // var otherPosition = [4, 4, 4];
     // var delta = [-1, -1, -1];

@@ -10,29 +10,29 @@ test("prepVector - basic test", function (assert) {
     deepEqual(actual, [-1, -1, -1], true);
 });
 
-test("deltaBetweenSensors - if sensors were next to each other", function (assert) {
+test("deltaBetweenSensors - if sensors were next to each other", 1, function (assert) {
     var referencePosition = [3, 3, 3];
     var otherPosition = [4, 4, 4];
     var result = PositionCalibrator.deltaBetweenSensors(referencePosition, otherPosition);
     // Readings from 'other' would need to be moved 'down' by 1, 'left' by 1 etc.
-    deepEqual(result, [-1, -1, -1], true);
+    assert.deepEqual(result, [-1, -1, -1], true);
 });
 
-test("deltaBetweenSensors - negative number scenario", function (assert) {
+test("deltaBetweenSensors - negative number scenario", 1, function (assert) {
     var referencePosition = [-3, -3, -3];
     var otherPosition = [-4, -4, -4];
     var result = PositionCalibrator.deltaBetweenSensors(referencePosition, otherPosition);
     // Readings from 'other' would need to be moved 'up' by 1, 'right' by 1 etc.
-    deepEqual(result, [1, 1, 1], true);
+    assert.deepEqual(result, [1, 1, 1], true);
 });
 
-test("convertRealVector - basic scenario", function (assert) {
+test("convertRealVector - basic scenario", 1, function (assert) {
     var otherPosition = [4, 4, 4];
     var delta = [-1, -1, -1];
     
     var result = PositionCalibrator.convertRealVector(otherPosition, delta);
     // Just like it came from the primary sensor
-    deepEqual(result, [3, 3, 3], true);
+    assert.deepEqual(result, [3, 3, 3], true);
 });
 
 // FIXME this should be an integration test
@@ -57,7 +57,7 @@ test("calibratePosition - basic scenario", function (assert) {
     var actual = func(otherReal);
     
     // Just like it came from the primary sensor
-    deepEqual(actual, [5, 3, 5], true);
+    assert.deepEqual(actual, [5, 3, 5], true);
     
     // var otherPosition = [4, 4, 4];
     //var delta = [-1, -1, -1];
@@ -65,11 +65,11 @@ test("calibratePosition - basic scenario", function (assert) {
 });
 
 
-test("convertRealVector - floating point", function (assert) {
+test("convertRealVector - floating point", 1, function (assert) {
     var otherPosition = [3.5, 3.5, 3.5];
     var delta = [-0.5, -0.5, -0.5];
     
     var result = PositionCalibrator.convertRealVector(otherPosition, delta);
     // Just like it came from the primary sensor
-    deepEqual(result, [3, 3, 3], true);
+    assert.deepEqual(result, [3, 3, 3], true);
 });

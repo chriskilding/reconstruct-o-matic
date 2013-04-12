@@ -37,23 +37,23 @@ var w = 5;
 
 };*/
 
-test("create - no args", 4, function () {
+test("create - no args", 4, function (assert) {
 	var a = Quaternion.create();
-	equal(a.x, 0, true);
-	equal(a.y, 0, true);
-	equal(a.z, 0, true);
-	equal(a.w, 1, true);
+	assert.equal(a.x, 0, true);
+	assert.equal(a.y, 0, true);
+	assert.equal(a.z, 0, true);
+	assert.equal(a.w, 1, true);
 });
 
-test("create - with args", 4, function () {
+test("create - with args", 4, function (assert) {
 	var a = Quaternion.create(x, y, z, w);
-	equal(a.x, x, true);
-	equal(a.y, y, true);
-	equal(a.z, z, true);
-	equal(a.w, w, true);
+	assert.equal(a.x, x, true);
+	assert.equal(a.y, y, true);
+	assert.equal(a.z, z, true);
+	assert.equal(a.w, w, true);
 });
 
-test("createFromAxisAngle", function () {
+test("createFromAxisAngle", function (assert) {
 
 	// TODO: find cases to validate.
   
@@ -66,20 +66,15 @@ test("createFromAxisAngle", function () {
         a2 = Quaternion.createFromAxisAngle({x: 1, y: 0, z: 0}, -Math.PI),
         mult = Quaternion.multiply(a1, a2);
 
-    ok(Quaternion.equals(a, zero), true);
-  
-	ok(Quaternion.equals(b, zero), true);
-  
-	ok(Quaternion.equals(c, zero), true);
-
-	ok(!Quaternion.equals(a, a1), true);
-
-	ok(!Quaternion.equals(a, a2), true);
-
-	ok(Quaternion.equals(a, mult), true);
+    assert.ok(Quaternion.equals(a, zero), true);
+	assert.ok(Quaternion.equals(b, zero), true);
+	assert.ok(Quaternion.equals(c, zero), true);
+	assert.ok(!Quaternion.equals(a, a1), true);
+	assert.ok(!Quaternion.equals(a, a2), true);
+	assert.ok(Quaternion.equals(a, mult), true);
 });
 
-test("to and from rotation matrix", function() {
+test("to and from rotation matrix", function (assert) {
     var mat = Quaternion.expandMatrix(Fixtures.real3x3);
     
     var quat = Quaternion.createFromRotationMatrix(mat);
@@ -100,7 +95,7 @@ test("createFromRotationMatrix - all zeroes", 1, function (assert) {
 
 // This steps through the low level maths
 // behind one of the RotationCalibrator's functions
-test("multiply - apply a quaternion of no change", 1, function () {
+test("multiply - apply a quaternion of no change", 1, function (assert) {
     // a real example once gave
     // { x: -1.5612511283791264e-17, y: 0, z: 0, w: 0.9999999621423682 }
     // which is nigh on...
@@ -141,38 +136,38 @@ test("multiply - apply a quaternion of no change", 1, function () {
 	});
 });*/
 
-test("normalize/length/lengthSquared - part 1", 4, function () {
+test("normalize/length/lengthSquared - part 1", 4, function (assert) {
     var a = Quaternion.create(x, y, z, w);
     
-    notEqual(Quaternion.length(a), 1, true);
-    notEqual(Quaternion.lengthSquared(a), 1, true);
+    assert.notEqual(Quaternion.length(a), 1, true);
+    assert.notEqual(Quaternion.lengthSquared(a), 1, true);
     
     var normA = Quaternion.normalize(a);
     
-    equal(Quaternion.length(normA), 1, true);
-    equal(Quaternion.lengthSquared(normA), 1, true);
+    assert.equal(Quaternion.length(normA), 1, true);
+    assert.equal(Quaternion.lengthSquared(normA), 1, true);
 });
 
-test( "normalize/length/lengthSquared - part 1", 4, function () {
+test("normalize/length/lengthSquared - part 1", 4, function (assert) {
     var a = Quaternion.create(0, 0, 0, 0),
         normA = Quaternion.normalize(a);
 
-    equal(Quaternion.length(a), 0, true);
-    equal(Quaternion.lengthSquared(a), 0, true);
-    equal(Quaternion.length(normA), 1, true);
-    equal(Quaternion.lengthSquared(normA), 1, true);
+    assert.equal(Quaternion.length(a), 0, true);
+    assert.equal(Quaternion.lengthSquared(a), 0, true);
+    assert.equal(Quaternion.length(normA), 1, true);
+    assert.equal(Quaternion.lengthSquared(normA), 1, true);
 });
 
-test( "inverse/conjugate", 4, function () {
+test("inverse/conjugate", 4, function (assert) {
     var a = Quaternion.create(x, y, z, w);
     
     // TODO: add better validation here.
     
     var b = Quaternion.conjugate(a);
-    equal(a.x, -b.x, true);
-    equal(a.y, -b.y, true);
-    equal(a.z, -b.z, true);	
-    equal(a.w, b.w, true);
+    assert.equal(a.x, -b.x, true);
+    assert.equal(a.y, -b.y, true);
+    assert.equal(a.z, -b.z, true);
+    assert.equal(a.w, b.w, true);
 });
 
 /*
@@ -217,14 +212,14 @@ test( "multiplyVector3", function() {
 
 });*/
 
-test("equals", function() {
+test("equals", function (assert) {
 	var a = Quaternion.create(x, y, z, w);
 	var b = Quaternion.create(-x, -y, -z, -w);
 	
-	notEqual(a.x, b.x, true);
-	notEqual(a.y, b.y, true);
+	assert.notEqual(a.x, b.x, true);
+	assert.notEqual(a.y, b.y, true);
 
-	ok(!Quaternion.equals(a, b), true);
-	ok(!Quaternion.equals(b, a), true);
+	assert.ok(!Quaternion.equals(a, b), true);
+	assert.ok(!Quaternion.equals(b, a), true);
 
 });
