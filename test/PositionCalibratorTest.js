@@ -35,7 +35,7 @@ test("convertRealVector - basic scenario", 1, function (assert) {
     assert.deepEqual(result, [3, 3, 3], true);
 });
 
-test("calibratePosition - is the returned func referentially transparent", function (assert) {
+test("calibratePosition - is the returned func referentially transparent", 1, function (assert) {
     // With joint in sight of both sensors the values are
     var ref = [3, 3, 3];
     var other = [15, 15, 15];

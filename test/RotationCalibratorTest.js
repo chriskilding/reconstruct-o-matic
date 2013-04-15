@@ -20,7 +20,7 @@ QUnit.module("RotationCalibrator");
 
 // This test is covered in lower-level detail by
 // QuaternionTest#multiply
-test("rotationDelta - identical values = no change", function (assert) {
+test("rotationDelta - identical values = no change", 1, function (assert) {
   // a real Kinect data sample
   var refMatrix = Fixtures.real3x3;
   // the same
@@ -37,7 +37,7 @@ test("rotationDelta - identical values = no change", function (assert) {
   closetest.arrayClose(actual, expected, Fixtures.maxDifference, true);
 });
 
-test("convertRealData - zero delta means no change", function (assert) {
+test("convertRealData - zero delta means no change", 1, function (assert) {
   // some real data
   var newQuat = RotationCalibrator.prepMatrix(Fixtures.real3x3);
   
@@ -51,7 +51,7 @@ test("convertRealData - zero delta means no change", function (assert) {
   closetest.arrayClose(actual, expected, Fixtures.maxDifference, true);
 });
 
-test("prepMatrix - sanity check", function (assert) {
+test("prepMatrix - sanity check", 1, function (assert) {
   // a real Kinect data sample
   var matrix = Fixtures.real3x3;
 
@@ -66,7 +66,7 @@ test("prepMatrix - sanity check", function (assert) {
 });
 
 // Zero delta, as if both sensors were right next to each other
-test("calibrateRotation - simulate sensors next to each other", function (assert) {
+test("calibrateRotation - simulate sensors next to each other", 1, function (assert) {
   // some real data
   var refMatrix = Fixtures.real3x3;
   // the same again

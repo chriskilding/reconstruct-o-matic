@@ -3,17 +3,31 @@
 
 QUnit.module("SkeletonCalibrator");
 
-/*test("computeJointDelta - basic scenario", function (assert) {
-    // With joint in sight of both sensors the values are
-    var refJoint = [3, 3, 3];
-    var otherJoint = [15, 15, 15];
+test("computeJointDelta - basic scenario", 2, function (assert) {
+    // With joint in sight of both sensors
+    // where one sensor is located on the same alignment
+    // as the primary sensor
+    // but a bit further away
+    // the values are
+    var refJoint = {
+        position: [3, 3, 3],
+        rotation: Fixtures.real3x3
+    };
     
+    var otherJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.real3x3
+    };
     
     var actual = SkeletonCalibrator.computeJointDelta(refJoint, otherJoint);
     
-});*/
+    // should be a delta of [12, 12, 12]
+    assert.deepEqual(actual.positionDeltaVector, [12, 12, 12], true);
+    // there should be no difference in rotation
+    assert.deepEqual(actual.rotationDeltaQuaternion, 0, true);
+});
 
-test("calibrateJoint - refJoint has zero rotation matrix", function (assert) {
+test("calibrateJoint - refJoint has zero rotation matrix", 1, function (assert) {
     // Reference sensor can't quite detect the rotation
     var refJoint = {
         position: [3, 3, 3],
@@ -30,7 +44,7 @@ test("calibrateJoint - refJoint has zero rotation matrix", function (assert) {
     assert.equal(actual, null, true);
 });
 
-test("calibrateJoint - otherJoint has zero rotation matrix", function (assert) {
+test("calibrateJoint - otherJoint has zero rotation matrix", 1, function (assert) {
     // Secondary sensor can't quite detect the rotation
     var refJoint = {
         position: [3, 3, 3],
@@ -47,7 +61,7 @@ test("calibrateJoint - otherJoint has zero rotation matrix", function (assert) {
     assert.equal(actual, null, true);
 });
 
-test("calibrateJoint - both have zero rotation matrices", function (assert) {
+test("calibrateJoint - both have zero rotation matrices", 1, function (assert) {
     // Neither sensor can detect the rotation
     var refJoint = {
         position: [3, 3, 3],

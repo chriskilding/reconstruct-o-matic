@@ -3,7 +3,7 @@
 
 var testrunner = require("qunit");
 //console.log(testrunner.options);
-testrunner.options.log.tests = false;
+testrunner.options.log.assertions = false;
 
 // array of code and test files
 testrunner.run([
