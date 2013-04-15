@@ -71,6 +71,17 @@ testrunner.run([
             namespace: "Vector3"
         },
         tests: "test/Vector3Test.js"
+    },
+    {
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
+        code: {
+            path: "lib/SkeletonAggregator.js",
+            namespace: "SkeletonAggregator"
+        },
+        tests: "test/SkeletonAggregatorTest.js"
     }
 ], function (err, report) {
     console.log(report);
