@@ -1,9 +1,13 @@
 /*jslint node: true */
 "use strict";
 
+// Bring in plugins
+var closetest = require("./utilities/close");
+
+
 QUnit.module("SkeletonCalibrator");
 
-test("computeJointDelta - basic scenario", 2, function (assert) {
+test("computeJointDelta - same rotation, different positions", 5, function (assert) {
     // With joint in sight of both sensors
     // where one sensor is located on the same alignment
     // as the primary sensor
@@ -21,10 +25,14 @@ test("computeJointDelta - basic scenario", 2, function (assert) {
     
     var actual = SkeletonCalibrator.computeJointDelta(refJoint, otherJoint);
     
-    // should be a delta of [12, 12, 12]
-    assert.deepEqual(actual.positionDeltaVector, [12, 12, 12], true);
+    // should be a delta of about [-12, -12, -12]
+    closetest.arrayClose(actual.positionDeltaVector, [-12, -12, -12], true);
     // there should be no difference in rotation
-    assert.deepEqual(actual.rotationDeltaQuaternion, 0, true);
+    // ie the quat should be {x: 0, y: 0, z: 0, w: 1}
+    closetest.close(actual.rotationDeltaQuaternion.x, 0, Fixtures.maxDifference, true);
+    closetest.close(actual.rotationDeltaQuaternion.y, 0, Fixtures.maxDifference, true);
+    closetest.close(actual.rotationDeltaQuaternion.z, 0, Fixtures.maxDifference, true);
+    closetest.close(actual.rotationDeltaQuaternion.w, 1, Fixtures.maxDifference, true);
 });
 
 test("calibrateJoint - refJoint has zero rotation matrix", 1, function (assert) {
