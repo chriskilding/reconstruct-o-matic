@@ -11,7 +11,8 @@
         "sylvester" : "0.0.21",
         "underscore": "1.4.4",
         "async": "0.2.6",
-        "qunit": "0.5.16"
+        "qunit": "0.5.16",
+        "sinon": "1.6.0"
     },
     "license": "MIT",
     "engines": {
