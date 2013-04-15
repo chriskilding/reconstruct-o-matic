@@ -93,6 +93,17 @@ testrunner.run([
             namespace: "Matrix"
         },
         tests: "test/MatrixTest.js"
+    },
+    {
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
+        code: {
+            path: "lib/UserAggregator.js",
+            namespace: "UserAggregator"
+        },
+        tests: "test/UserAggregatorTest.js"
     }
 ], function (err, report) {
     console.log(report);

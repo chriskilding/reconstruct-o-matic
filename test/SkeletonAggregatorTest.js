@@ -97,3 +97,17 @@ test("reduceJoints - A has stronger reading with args other way round", 1, funct
     // Essentially, each key and value should 'equal' the a object
     assert.ok(_.isEqual(actual, a), true);
 });
+
+test("reconstructSkeleton - no args", 1, function (assert) {
+    var actual = SkeletonAggregator.reconstructSkeleton();
+
+    // Should get empty object back
+    assert.deepEqual(actual, undefined, true);
+});
+
+test("reconstructSkeleton - one arg", 1, function (assert) {
+    var actual = SkeletonAggregator.reconstructSkeleton([Fixtures.realUser.skeleton]);
+
+    // Should be passed through
+    assert.deepEqual(actual, Fixtures.realUser.skeleton, true);
+});
