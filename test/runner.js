@@ -34,7 +34,7 @@ testrunner.run([
     },
     {
         code: {
-            path: "lib/Triangles.js",
+            path: "lib/math/Triangles.js",
             namespace: "Triangles"
         },
         tests: "test/TrianglesTest.js"
@@ -56,7 +56,7 @@ testrunner.run([
             namespace: "Fixtures"
         },
         code: {
-            path: "lib/Quaternion.js",
+            path: "lib/math/Quaternion.js",
             namespace: "Quaternion"
         },
         tests: "test/QuaternionTest.js"
@@ -67,7 +67,7 @@ testrunner.run([
             namespace: "Fixtures"
         },
         code: {
-            path: "lib/Vector3.js",
+            path: "lib/math/Vector3.js",
             namespace: "Vector3"
         },
         tests: "test/Vector3Test.js"
