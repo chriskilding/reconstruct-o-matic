@@ -82,6 +82,17 @@ testrunner.run([
             namespace: "SkeletonAggregator"
         },
         tests: "test/SkeletonAggregatorTest.js"
+    },
+    {
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
+        code: {
+            path: "lib/math/Matrix.js",
+            namespace: "Matrix"
+        },
+        tests: "test/MatrixTest.js"
     }
 ], function (err, report) {
     console.log(report);
