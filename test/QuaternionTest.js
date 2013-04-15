@@ -75,7 +75,7 @@ test("createFromAxisAngle", function (assert) {
 });
 
 test("to and from rotation matrix", function (assert) {
-    var mat = Quaternion.expandMatrix(Fixtures.real3x3);
+    var mat = Fixtures.real4x4;
     
     var quat = Quaternion.createFromRotationMatrix(mat);
     
@@ -212,7 +212,19 @@ test( "multiplyVector3", function() {
 
 });*/
 
-test("equals", function (assert) {
+test("equals - is equal", function (assert) {
+	var a = Quaternion.create(x, y, z, w);
+	var b = Quaternion.create(x, y, z, w);
+	
+	assert.equal(a.x, b.x, true);
+	assert.equal(a.y, b.y, true);
+
+	assert.ok(Quaternion.equals(a, b), true);
+	assert.ok(Quaternion.equals(b, a), true);
+
+});
+
+test("equals - is not equal", function (assert) {
 	var a = Quaternion.create(x, y, z, w);
 	var b = Quaternion.create(-x, -y, -z, -w);
 	
