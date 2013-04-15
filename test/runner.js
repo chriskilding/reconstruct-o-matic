@@ -39,13 +39,17 @@ testrunner.run([
         },
         tests: "test/TrianglesTest.js"
     },
-    /*{
+    {
+        deps: {
+            path: "test/Fixtures.js",
+            namespace: "Fixtures"
+        },
         code: {
-          path: "lib/SkeletonCalibrator.js",
-          namespace: "SkeletonCalibrator"
+            path: "lib/SkeletonCalibrator.js",
+            namespace: "SkeletonCalibrator"
         },
         tests: "test/SkeletonCalibratorTest.js"
-    },*/
+    },
     {
         deps: {
             path: "test/Fixtures.js",

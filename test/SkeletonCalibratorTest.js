@@ -3,11 +3,71 @@
 
 QUnit.module("SkeletonCalibrator");
 
+/*test("computeJointDelta - basic scenario", function (assert) {
+    // With joint in sight of both sensors the values are
+    var refJoint = [3, 3, 3];
+    var otherJoint = [15, 15, 15];
+    
+    
+    var actual = SkeletonCalibrator.computeJointDelta(refJoint, otherJoint);
+    
+});*/
+
+test("calibrateJoint - refJoint has zero rotation matrix", function (assert) {
+    // Reference sensor can't quite detect the rotation
+    var refJoint = {
+        position: [3, 3, 3],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var otherJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.real3x3
+    };
+    
+    var actual = SkeletonCalibrator.calibrateJoint(refJoint, otherJoint);
+    
+    assert.equal(actual, null, true);
+});
+
+test("calibrateJoint - otherJoint has zero rotation matrix", function (assert) {
+    // Secondary sensor can't quite detect the rotation
+    var refJoint = {
+        position: [3, 3, 3],
+        rotation: Fixtures.real3x3
+    };
+    
+    var otherJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var actual = SkeletonCalibrator.calibrateJoint(refJoint, otherJoint);
+    
+    assert.equal(actual, null, true);
+});
+
+test("calibrateJoint - both have zero rotation matrices", function (assert) {
+    // Neither sensor can detect the rotation
+    var refJoint = {
+        position: [3, 3, 3],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var otherJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var actual = SkeletonCalibrator.calibrateJoint(refJoint, otherJoint);
+    
+    assert.equal(actual, null, true);
+});
 
 // This is more of an integration test
 // as it requires syncing of coordinate systems
 // which in turn requires the RotationCalibrator
-test("calibratePosition - basic scenario", function (assert) {
+/*test("calibratePosition - basic scenario", function (assert) {
     // With joint in sight of both sensors the values are
     var ref = [3, 3, 3];
     var other = [15, 15, 15];
@@ -32,3 +92,4 @@ test("calibratePosition - basic scenario", function (assert) {
     // var delta = [-1, -1, -1];
     // var result = PositionCalibrator.convertRealVector(otherPosition, delta);
 });
+*/
