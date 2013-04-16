@@ -28,20 +28,20 @@ var b = {
 // test reducing 2 users
 // -------------------------
 
-test("reconstructUser - No users supplied", 1, function (assert) {
-    var actual = UserAggregator.reconstructUser();
+test("condenseUser - No users supplied", 1, function (assert) {
+    var actual = UserAggregator.condenseUser();
     // Need deepEqual because {} does not == {}!
     assert.deepEqual(actual, undefined, true);
 });
 
-test("reconstructUser - One user supplied", 1, function (assert) {
-    var actual = UserAggregator.reconstructUser(Fixtures.realUser);
+test("condenseUser - One user supplied", 1, function (assert) {
+    var actual = UserAggregator.condenseUser(Fixtures.realUser);
     // Need deepEqual because {} does not == {}!
     assert.deepEqual(actual, Fixtures.realUser, true);
 });
 
-test("reconstructUser - Multiple users supplied", 3, function (assert) {
-    var actual = UserAggregator.reconstructUser(Fixtures.realUser, Fixtures.realUser);
+test("condenseUser - Multiple users supplied", 3, function (assert) {
+    var actual = UserAggregator.condenseUser(Fixtures.realUser, Fixtures.realUser);
     // Need deepEqual because {} does not == {}!
     assert.ok(actual.positionTracked, true);
     assert.ok(actual.skeletonTracked, true);
