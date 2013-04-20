@@ -1,6 +1,6 @@
 {
     "name": "reconstruct-o-matic",
-    "private": "true",
+    "description": "A machine vision scene reconstruction system that aggregates OpenNI data from multiple sensors.",
     "version": "0.0.1",
     "author": "Christopher Kilding <mr.chris.k@gmail.com>",
     "main": "./server",
@@ -10,9 +10,15 @@
         "redis"     : "0.8.2", 
         "sylvester" : "0.0.21",
         "underscore": "1.4.4",
-        "async": "0.2.6",
+        "async": "0.2.6"
+    },
+    "devDependencies": {
         "qunit": "0.5.16",
         "sinon": "1.6.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/themasterchef/reconstruct-o-matic.git"
     },
     "license": "MIT",
     "engines": {
