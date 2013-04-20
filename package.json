@@ -1,14 +1,14 @@
 {
     "name": "reconstruct-o-matic",
     "description": "A machine vision scene reconstruction system that aggregates OpenNI data from multiple sensors.",
-    "version": "0.0.1",
+    "version": "0.0.1-1",
     "author": "Christopher Kilding <mr.chris.k@gmail.com>",
     "main": "./lib/socketio-server",
     "dependencies": {
         "socket.io": "0.9.11",
-        "hiredis"   : "0.1.14",
-        "redis"     : "0.8.2", 
-        "sylvester" : "0.0.21",
+        "hiredis": "0.1.14",
+        "redis": "0.8.2",
+        "sylvester": "0.0.21",
         "underscore": "1.4.4",
         "async": "0.2.6"
     },
@@ -16,6 +16,9 @@
         "qunit": "0.5.16",
         "sinon": "1.6.0"
     },
+    "bundledDependencies": [
+        "redis"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/themasterchef/reconstruct-o-matic.git"
@@ -27,5 +30,6 @@
     "license": "MIT",
     "engines": {
         "node": ">=0.6"
-    }
+    },
+    "subdomain": "themasterchef-reconstruct-o-matic"
 }
