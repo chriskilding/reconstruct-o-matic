@@ -6,7 +6,6 @@
     "main": "./lib/socketio-server",
     "dependencies": {
         "socket.io": "0.9.11",
-        "hiredis": "0.1.14",
         "redis": "0.8.2",
         "sylvester": "0.0.21",
         "underscore": "1.4.4",
@@ -16,9 +15,6 @@
         "qunit": "0.5.16",
         "sinon": "1.6.0"
     },
-    "bundledDependencies": [
-        "redis"
-    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/themasterchef/reconstruct-o-matic.git"
