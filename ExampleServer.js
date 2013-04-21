@@ -1,12 +1,12 @@
 /*jslint node: true */
 "use strict";
 
-var Client = require("./Client");
-var ClientSkeletonManager = require("./ClientSkeletonManager");
-
 // Node server which gets OpenNI data from clients and combines it
 // using socket.io as a transport
 exports.init = function () {
+    var Client = require("./lib/server-helpers/Client");
+    var ClientSkeletonManager = require("./lib/server-helpers/ClientSkeletonManager");
+
     // Uses the socket.io server component (debug output suppressed)
     var io = require("socket.io").listen(3000, { log: false });
     
