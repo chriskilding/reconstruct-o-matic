@@ -14,6 +14,8 @@ exports.init = function () {
     var manager = new ClientSkeletonManager();
         
     io.sockets.on("connection", function (socket) {
+        console.log("client connected", socket.id);
+        
         // We need some way to uniquely identify each client
         // (don't know what the skeleton ID is at this time
         // so leave it blank)
