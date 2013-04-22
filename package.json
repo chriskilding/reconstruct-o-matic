@@ -1,7 +1,7 @@
 {
     "name": "reconstruct-o-matic",
     "description": "A machine vision scene reconstruction system that aggregates OpenNI data from multiple sensors.",
-    "version": "0.0.1-6",
+    "version": "0.0.1-7",
     "author": "Christopher Kilding <mr.chris.k@gmail.com>",
     "main": "./ExampleServer",
     "dependencies": {
