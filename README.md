@@ -5,9 +5,9 @@ A machine vision multi-view scene reconstruction system that aggregates OpenNI d
 For now, the system only runs in a Node.js server environment, but most of the library code is independent of the Node environment and could be used in other places.
 
 ## Principal components
-- `math/`: a body of maths-heavy `library` code written in a mostly functional style, to eliminate as much error-prone retained state as possible while increasing their flexibility.
-- Calibrators: a series of modules which calibrate a secondary sensor so that its subsequent data can be 'transformed' to make it look like it was a reading from the primary sensor's point of view. As in the math code, they are written in a functional style to use the elegant bottom-up form of coding that lets us calibrate and reconstruct a skeleton vector by vector, and joint by joint.
-- Aggregators: these take a series of skeletons that have already been 'reconstructed', and reduces them to a single skeleton by taking the reading with the highest confidence for each joint.
+- `math/`: a body of math-heavy 'library' code written in a mostly functional style to eliminate as much error-prone mutable state as possible while increasing its flexibility.
+- Calibrators: a series of modules which calibrate a secondary sensor so that its subsequent data input can be 'transformed' to make it look like it was a reading from the primary sensor's point of view. Like the math code, they are written in a functional style to use the elegant bottom-up form of coding that lets us calibrate and reconstruct a skeleton vector by vector, and joint by joint.
+- Aggregators: these take a series of skeletons that have already been 'reconstructed', and reduce them to a single skeleton by taking the reading with the highest confidence for each joint.
 - `server-helpers/`: some helpers for setting up a server with multiple interacting clients which supply and receive data. These helpers could work with any type of server and are not specific to the supplied socket.io example.
 
 ## Set up
