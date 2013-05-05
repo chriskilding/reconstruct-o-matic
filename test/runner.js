@@ -35,13 +35,13 @@ testrunner.run([
         },
         tests: "test/TrianglesTest.js"
     },
-    /*{
+    {
         code: {
             path: "lib/SkeletonCalibrator.js",
             namespace: "SkeletonCalibrator"
         },
         tests: "test/SkeletonCalibratorTest.js"
-    },*/
+    },
     {
         code: {
             path: "lib/math/Quaternion.js",
@@ -76,6 +76,13 @@ testrunner.run([
             namespace: "UserAggregator"
         },
         tests: "test/UserAggregatorTest.js"
+    },
+    {
+        code: {
+            path: "lib/server-helpers/Skeleton.js",
+            namespace: "Skeleton"
+        },
+        tests: "test/SkeletonTest.js"
     }
 ], function (err, report) {
     console.log(report);
