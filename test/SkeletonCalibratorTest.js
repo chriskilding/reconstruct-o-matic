@@ -3,6 +3,7 @@
 
 // Bring in plugins
 var closetest = require("./utilities/close");
+var Fixtures = require("./Fixtures");
 
 
 QUnit.module("SkeletonCalibrator");

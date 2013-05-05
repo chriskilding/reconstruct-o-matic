@@ -11,6 +11,8 @@ QUnit.module("Quaternion");
 
 var closetest = require("./utilities/close");
 
+var Fixtures = require("./Fixtures");
+
 var orders = [ 'XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY' ];
 var eulerAngles = {
     x: 0.1,
@@ -21,8 +23,6 @@ var x = 2;
 var y = 3;
 var z = 4;
 var w = 5;
-
-
 
 /*var qSub = function ( a, b ) {
 	var result = Quaternion.create(a);

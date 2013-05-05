@@ -22,10 +22,6 @@ testrunner.run([
         tests: "test/PositionCalibratorTest.js"
     },
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/RotationCalibrator.js",
             namespace: "RotationCalibrator"
@@ -39,22 +35,14 @@ testrunner.run([
         },
         tests: "test/TrianglesTest.js"
     },
-    {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
+    /*{
         code: {
             path: "lib/SkeletonCalibrator.js",
             namespace: "SkeletonCalibrator"
         },
         tests: "test/SkeletonCalibratorTest.js"
-    },
+    },*/
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/math/Quaternion.js",
             namespace: "Quaternion"
@@ -62,10 +50,6 @@ testrunner.run([
         tests: "test/QuaternionTest.js"
     },
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/math/Vector3.js",
             namespace: "Vector3"
@@ -73,10 +57,6 @@ testrunner.run([
         tests: "test/Vector3Test.js"
     },
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/SkeletonAggregator.js",
             namespace: "SkeletonAggregator"
@@ -84,10 +64,6 @@ testrunner.run([
         tests: "test/SkeletonAggregatorTest.js"
     },
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/math/Matrix.js",
             namespace: "Matrix"
@@ -95,10 +71,6 @@ testrunner.run([
         tests: "test/MatrixTest.js"
     },
     {
-        deps: {
-            path: "test/Fixtures.js",
-            namespace: "Fixtures"
-        },
         code: {
             path: "lib/UserAggregator.js",
             namespace: "UserAggregator"

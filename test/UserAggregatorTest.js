@@ -5,6 +5,8 @@ QUnit.module("UserAggregator");
 
 var _ = require("underscore");
 
+var Fixtures = require("./Fixtures");
+
 // A has the higher reading confidences
 
 var a = {

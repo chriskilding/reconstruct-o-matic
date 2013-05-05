@@ -3,6 +3,8 @@
 
 QUnit.module("Matrix");
 
+var Fixtures = require("./Fixtures");
+
 test("expandMatrix - basic scenario", 1, function (assert) {
     var actual = Matrix.expandMatrix(Fixtures.real3x3);
     

@@ -1,10 +1,14 @@
+/*jslint node: true */
+"use strict";
+
 // Bring in plugins
-const closetest = require("./utilities/close");
+var closetest = require("./utilities/close");
+var Fixtures = require("./Fixtures");
 
 // One more fixture
 // just acts as 'another reading'
 // that comes in after the calibration phase
-const newRotation = [
+var newRotation = [
   0.5315466523170471,
   -0.2101487815380096,
   -0.8205456733703613,
@@ -15,6 +19,7 @@ const newRotation = [
   0.06240064650774002,
   0.5313219428062439
 ];
+
 
 QUnit.module("RotationCalibrator");
 

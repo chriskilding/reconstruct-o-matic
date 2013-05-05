@@ -1,6 +1,8 @@
 /*jslint node: true */
 "use strict";
 
+var Fixtures = require("./Fixtures");
+
 QUnit.module("Vector3");
 
 var closetest = require("./utilities/close");
