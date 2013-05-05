@@ -79,10 +79,10 @@ testrunner.run([
     },
     {
         code: {
-            path: "lib/server-helpers/Skeleton.js",
-            namespace: "Skeleton"
+            path: "lib/server-helpers/ClientSkeleton.js",
+            namespace: "ClientSkeleton"
         },
-        tests: "test/SkeletonTest.js"
+        tests: "test/ClientSkeletonTest.js"
     }
 ], function (err, report) {
     console.log(report);
