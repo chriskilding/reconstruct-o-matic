@@ -79,7 +79,7 @@ test("add 2 clients - remove secondary - still work?", 2, function (assert) {
     c1.finishWindowCallback.restore();
 });
 
-test("add 2 clients - remove primary - still work?", function (assert) {    
+test("add 2 clients - remove primary - still work?", 3, function (assert) {    
     var c1 = room.addClient(client1);
     var c2 = room.addClient(client2);
     
@@ -97,7 +97,7 @@ test("add 2 clients - remove primary - still work?", function (assert) {
     assert.ok(room.isReferenceClient(c2), true);
     
     // Looking at c2 this time
-    var methodSpy = sinon.spy(room.skeleton, "finishWindow");
+    var methodSpy = sinon.spy(c2, "finishWindowCallback");
     
     // again for the real thing
     // This call has been known to cause trouble
@@ -107,12 +107,9 @@ test("add 2 clients - remove primary - still work?", function (assert) {
     // c2 called with *something*
     assert.ok(methodSpy.called, true);
     
-    console.log(methodSpy.returnValues);
     // c1 still gets its data back
     // server did not crash
-    //assert.ok(finishSpy.calledWith(Fixtures.realUser), true);
-    
-    room.skeleton.finishWindow.restore();
+    assert.ok(methodSpy.calledWith(Fixtures.realUser), true);    
 });
 
 test("referenceClient - with no clients", 1, function (assert) {

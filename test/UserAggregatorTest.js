@@ -12,18 +12,18 @@ var Fixtures = require("./Fixtures");
 var a = {
     id: 15,
     position: [1, 1, 1],
-    positionConfidence: 0.8,
+    positionconfidence: 0.8,
     rotation: Fixtures.real3x3,
-    rotationConfidence: 0.9
+    rotationconfidence: 0.9
 };
 
 var b = {
     id: 15,
     position: [3, 3, 3],
-    positionConfidence: 0.5,
+    positionconfidence: 0.5,
     // TODO give b a proper rotation!
     rotation: [],
-    rotationConfidence: 0.3
+    rotationconfidence: 0.3
 };
 
 // -------------------------

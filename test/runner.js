@@ -103,5 +103,5 @@ testrunner.run([
         tests: "test/ClientSkeletonManagerTest.js"
     }
 ], function (err, report) {
-    console.log(report);
+    // console.log(report);
 });

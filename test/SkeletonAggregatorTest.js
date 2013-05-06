@@ -12,18 +12,18 @@ var _ = require("underscore");
 var a = {
     id: 15,
     position: [1, 1, 1],
-    positionConfidence: 0.8,
+    positionconfidence: 0.8,
     rotation: Fixtures.real3x3,
-    rotationConfidence: 0.9
+    rotationconfidence: 0.9
 };
 
 var b = {
     id: 15,
     position: [3, 3, 3],
-    positionConfidence: 0.5,
+    positionconfidence: 0.5,
     // TODO give b a proper rotation!
     rotation: [],
-    rotationConfidence: 0.3
+    rotationconfidence: 0.3
 };
 
 // -------------------------
@@ -33,25 +33,25 @@ var b = {
 test("reduceData - A has better position", 2, function (assert) {
     var actual = SkeletonAggregator.reduceData(
         a.position,
-        a.positionConfidence,
+        a.positionconfidence,
         b.position,
-        b.positionConfidence
+        b.positionconfidence
     );
     
     assert.deepEqual(actual.value, a.position, true);
-    assert.equal(actual.confidence, a.positionConfidence, true);
+    assert.equal(actual.confidence, a.positionconfidence, true);
 });
 
 test("reduceData - A has better position with args other way round", 2, function (assert) {
     var actual = SkeletonAggregator.reduceData(
         b.position,
-        b.positionConfidence,
+        b.positionconfidence,
         a.position,
-        a.positionConfidence
+        a.positionconfidence
     );
     
     assert.deepEqual(actual.value, a.position, true);
-    assert.equal(actual.confidence, a.positionConfidence, true);
+    assert.equal(actual.confidence, a.positionconfidence, true);
 });
 
 // -------------------------
@@ -61,25 +61,25 @@ test("reduceData - A has better position with args other way round", 2, function
 test("reduceData - A has better rotation", 2, function (assert) {
     var actual = SkeletonAggregator.reduceData(
         a.rotation,
-        a.rotationConfidence,
+        a.rotationconfidence,
         b.rotation,
-        b.rotationConfidence
+        b.rotationconfidence
     );
     
     assert.deepEqual(actual.value, a.rotation, true);
-    assert.equal(actual.confidence, a.rotationConfidence, true);
+    assert.equal(actual.confidence, a.rotationconfidence, true);
 });
 
 test("reduceData - A has better rotation with args other way round", 2, function (assert) {
     var actual = SkeletonAggregator.reduceData(
         b.rotation,
-        b.rotationConfidence,
+        b.rotationconfidence,
         a.rotation,
-        a.rotationConfidence
+        a.rotationconfidence
     );
     
     assert.deepEqual(actual.value, a.rotation, true);
-    assert.equal(actual.confidence, a.rotationConfidence, true);
+    assert.equal(actual.confidence, a.rotationconfidence, true);
 });
 
 // -------------------------
