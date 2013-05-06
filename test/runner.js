@@ -83,6 +83,17 @@ testrunner.run([
             namespace: "ClientSkeleton"
         },
         tests: "test/ClientSkeletonTest.js"
+    },
+    {
+        deps: {
+            path: "lib/SkeletonCalibrator.js",
+            namespace: "SkeletonCalibrator"
+        },
+        code: {
+            path: "lib/server-helpers/Skeleton.js",
+            namespace: "Skeleton"
+        },
+        tests: "test/SkeletonTest.js"
     }
 ], function (err, report) {
     console.log(report);
