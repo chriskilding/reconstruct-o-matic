@@ -94,6 +94,13 @@ testrunner.run([
             namespace: "Skeleton"
         },
         tests: "test/SkeletonTest.js"
+    },
+    {
+        code: {
+            path: "lib/server-helpers/ClientSkeletonManager.js",
+            namespace: "ClientSkeletonManager"
+        },
+        tests: "test/ClientSkeletonManagerTest.js"
     }
 ], function (err, report) {
     console.log(report);
