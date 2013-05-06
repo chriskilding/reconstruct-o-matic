@@ -101,3 +101,27 @@ test("pushReal - with 1 client", 2, function (assert) {
     // Did the result get back to c1
     assert.ok(finishSpy.called, true);
 });
+
+// 1 client with a sensor, and 1 viewer
+test("pushReal - 1 client, 1 viewer", 3, function (assert) {
+    var c1 = room.addClient(client1);
+    var c2 = room.addClient(client2);
+    
+    // Only c1 needs to calibrate
+    c1.calibrate(Fixtures.realUser);
+    
+    var pushRealSpy = sinon.spy(room, 'pushReal');
+    var finish1Spy = sinon.spy(c1, 'finishWindowCallback');
+    var finish2Spy = sinon.spy(c2, 'finishWindowCallback');
+    
+    // Yes, I used the same value again...
+    var result = c1.pushRealData(Fixtures.realUser);
+    
+    // Did it hit the clientskeleton
+    assert.ok(pushRealSpy.calledWith(c1, Fixtures.realUser), true);    
+        
+    // Did the result get back to c1
+    assert.ok(finish1Spy.called, true);
+    // and c2??
+    assert.ok(finish2Spy.called, true);
+});
