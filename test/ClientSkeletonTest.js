@@ -72,3 +72,14 @@ test("isReferenceClient - with 2 clients", 1, function (assert) {
     // client2 is the ref client
     assert.ok(actual, true);
 });
+
+// Can a client stream back to itself?
+test("getCalibrationFunc - with 1 client", 1, function (assert) {
+    var c1 = room.addClient(client1);
+    
+    var funcSpy = sinon.spy(room, 'getCalibrationFunc');
+
+    c1.calibrate(Fixtures.realUser);
+        
+    assert.ok(funcSpy.calledWith(c1, Fixtures.realUser), true);    
+});
