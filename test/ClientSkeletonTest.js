@@ -48,6 +48,29 @@ test("removeClient - remove 1 client", 1, function (assert) {
     assert.ok(removeMethod.calledWith(client1), true);
 });
 
+test("add 2 clients - remove 1 - still work?", 2, function (assert) {    
+    var c1 = room.addClient(client1);
+    var c2 = room.addClient(client2);
+    
+    var finishSpy = sinon.spy(c1, "finishWindowCallback");
+    
+    // c1 pushes once to calibrate some data
+    c1.pushRealData(Fixtures.realUser);
+    
+    // Remove second one
+    c2.terminate();
+    
+    // again for the real thing
+    c1.pushRealData(Fixtures.realUser);
+    
+    // c1 called with *something*
+    assert.ok(finishSpy.called, true);
+    
+    // c1 still gets its data back
+    // server did not crash
+    assert.ok(finishSpy.calledWith(Fixtures.realUser), true);
+});
+
 test("referenceClient - with no clients", 1, function (assert) {
     // There are no clients yet
     assert.ok(!room.referenceClient, true);
@@ -80,7 +103,7 @@ test("getCalibrationFunc - with 1 client", 1, function (assert) {
     var funcSpy = sinon.spy(room, 'getCalibrationFunc');
 
     c1.calibrate(Fixtures.realUser);
-        
+    
     assert.ok(funcSpy.calledWith(c1, Fixtures.realUser), true);    
 });
 
