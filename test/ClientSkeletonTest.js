@@ -83,3 +83,21 @@ test("getCalibrationFunc - with 1 client", 1, function (assert) {
         
     assert.ok(funcSpy.calledWith(c1, Fixtures.realUser), true);    
 });
+
+// Can a client stream back to itself?
+test("pushReal - with 1 client", 2, function (assert) {
+    var c1 = room.addClient(client1);
+    c1.calibrate(Fixtures.realUser);
+    
+    var pushRealSpy = sinon.spy(room, 'pushReal');
+    var finishSpy = sinon.spy(c1, 'finishWindowCallback');
+    
+    // Yes, I used the same value again...
+    var result = c1.pushRealData(Fixtures.realUser);
+    
+    // Did it hit the clientskeleton
+    assert.ok(pushRealSpy.calledWith(c1, Fixtures.realUser), true);    
+        
+    // Did the result get back to c1
+    assert.ok(finishSpy.called, true);
+});
