@@ -40,6 +40,8 @@ test("removeClient - remove 1 client", 1, function (assert) {
     var theClient = room.addClient(client1);
     
     // Remove it
+    // as this is a reference client
+    // the ref data will change
     theClient.terminate();
     
     var actual = room.clients[client1];
@@ -48,7 +50,7 @@ test("removeClient - remove 1 client", 1, function (assert) {
     assert.ok(removeMethod.calledWith(client1), true);
 });
 
-test("add 2 clients - remove 1 - still work?", 2, function (assert) {    
+test("add 2 clients - remove secondary - still work?", 2, function (assert) {    
     var c1 = room.addClient(client1);
     var c2 = room.addClient(client2);
     
@@ -58,6 +60,9 @@ test("add 2 clients - remove 1 - still work?", 2, function (assert) {
     c1.pushRealData(Fixtures.realUser);
     
     // Remove second one
+    // Note, as this is a secondary client
+    // it should not trigger a change
+    // in the ref calibration reading
     c2.terminate();
     
     // again for the real thing
@@ -69,6 +74,45 @@ test("add 2 clients - remove 1 - still work?", 2, function (assert) {
     // c1 still gets its data back
     // server did not crash
     assert.ok(finishSpy.calledWith(Fixtures.realUser), true);
+    
+    // Unwrap
+    c1.finishWindowCallback.restore();
+});
+
+test("add 2 clients - remove primary - still work?", function (assert) {    
+    var c1 = room.addClient(client1);
+    var c2 = room.addClient(client2);
+    
+    // c1 pushes once to calibrate some data
+    c1.pushRealData(Fixtures.realUser);
+    // c2 pushes once to calibrate some data
+    c2.pushRealData(Fixtures.realUser);
+    
+    // Remove c1
+    // Note, this should trigger change
+    // in reference calibration readings
+    c1.terminate();
+
+    // Confirm the ref client has changed
+    assert.ok(room.isReferenceClient(c2), true);
+    
+    // Looking at c2 this time
+    var methodSpy = sinon.spy(room.skeleton, "finishWindow");
+    
+    // again for the real thing
+    // This call has been known to cause trouble
+    // if data structure of skeleton is not right
+    c2.pushRealData(Fixtures.realUser);
+        
+    // c2 called with *something*
+    assert.ok(methodSpy.called, true);
+    
+    console.log(methodSpy.returnValues);
+    // c1 still gets its data back
+    // server did not crash
+    //assert.ok(finishSpy.calledWith(Fixtures.realUser), true);
+    
+    room.skeleton.finishWindow.restore();
 });
 
 test("referenceClient - with no clients", 1, function (assert) {
