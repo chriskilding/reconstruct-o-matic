@@ -6,8 +6,23 @@
 exports.init = function () {
     var ClientSkeletonManager = require("./lib/server-helpers/ClientSkeletonManager");
 
+    // Logger
+    var winston = require("winston");
+
+    if (process.env.logentries_token) {
+        winston.info("switching to SaaS logger");
+        require("node-logentries")
+            .logger({
+                token: process.env.logentries_token
+            })
+            .winston(winston);
+    }
+    
     // Uses the socket.io server component (debug output suppressed)
-    var io = require("socket.io").listen(3000, { log: false });
+    var io = require("socket.io").listen(
+        process.env.port || 3000,
+        { log: false }
+    );
     
     io.configure(function () {
         io.set("transports", ["xhr-polling"]);
@@ -18,7 +33,7 @@ exports.init = function () {
     var manager = new ClientSkeletonManager();
         
     io.sockets.on("connection", function (socket) {
-        console.log("client connected", socket.id);
+        winston.info("client connected", socket.id);
         
         // We need some way to uniquely identify each client
         // (don't know what the skeleton ID is at this time
@@ -27,7 +42,7 @@ exports.init = function () {
         
         // Client leaving or disconnecting
         var onexit = function () {
-            console.log("Client leaving", socket.id);
+            winston.info("Client leaving", socket.id);
             if (syncedClient) {
                 syncedClient.terminate();
             }
@@ -35,7 +50,7 @@ exports.init = function () {
         
         // Received calibration data from client
         socket.on("calibrate", function (data) {
-            console.log("calibrating", socket.id);
+            winston.info("calibrating", socket.id);
             if (syncedClient) {
                 syncedClient.calibrate(data);
             }
@@ -54,7 +69,7 @@ exports.init = function () {
         
         // Client setting its 'sharing code' to team up with others
         socket.on("subscribe", function (skeletonId) {
-            console.log("client joining a session", skeletonId);
+            winston.info("client joining a session", skeletonId);
             syncedClient = manager.joinSkeleton(socket.id, skeletonId);
             
             // Only now there is a syncedClient 

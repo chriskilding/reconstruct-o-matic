@@ -1,6 +1,6 @@
 /*jslint node: true */
 "use strict";
 
-console.log("Starting up...");
+require("winston").info("Starting up...");
 
 require("./ExampleServer").init();

@@ -7,7 +7,9 @@
         "socket.io": "0.9.11",
         "sylvester": "0.0.21",
         "underscore": "1.4.4",
-        "signals": "1.0.0"
+        "signals": "1.0.0",
+        "winston": "0.7.1",
+        "node-logentries": "0.1.0"
     },
     "devDependencies": {
         "qunit": "0.5.16",
