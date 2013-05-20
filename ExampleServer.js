@@ -10,13 +10,13 @@ exports.init = function () {
     var winston = require("winston");
 
     if (process.env.loggly_inputToken) {
+        winston.info("adding SaaS logger");
+        
         winston.add(require("winston-loggly").Loggly, {
             subdomain: process.env.loggly_subdomain,
             inputToken: process.env.loggly_inputToken,
             json: true
         });
-        
-        winston.info("switching to SaaS logger");
     }
     
     // Uses the socket.io server component (debug output suppressed)
