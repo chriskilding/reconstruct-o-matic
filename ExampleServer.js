@@ -28,7 +28,9 @@ exports.init = function () {
     var manager = new ClientSkeletonManager();
         
     io.sockets.on("connection", function (socket) {
-        winston.info("client connected %s", socket.id);
+        winston.info("client connected", {
+            "clientId": socket.id
+        });
         
         // We need some way to uniquely identify each client
         // (don't know what the skeleton ID is at this time
@@ -37,7 +39,10 @@ exports.init = function () {
         
         // Client leaving or disconnecting
         var onexit = function () {
-            winston.info("Client leaving %s", socket.id);
+            winston.info("Client leaving", {
+                clientId: socket.id
+            });
+            
             if (syncedClient) {
                 syncedClient.terminate();
             }
@@ -45,7 +50,10 @@ exports.init = function () {
         
         // Received calibration data from client
         socket.on("calibrate", function (data) {
-            winston.info("calibrating %s", socket.id);
+            winston.info("Client calibrating", {
+                "clientId": socket.id
+            });
+            
             if (syncedClient) {
                 syncedClient.calibrate(data);
             }
@@ -64,7 +72,11 @@ exports.init = function () {
         
         // Client setting its 'sharing code' to team up with others
         socket.on("subscribe", function (skeletonId) {
-            winston.info("client joining a session %s", skeletonId);
+            winston.info("Client joining a session", {
+                "clientId": socket.id,
+                "sessionId": skeletonId
+            });
+            
             syncedClient = manager.joinSkeleton(socket.id, skeletonId);
             
             // Only now there is a syncedClient 
