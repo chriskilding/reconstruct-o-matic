@@ -9,6 +9,11 @@ exports.init = function () {
     // Uses the socket.io server component (debug output suppressed)
     var io = require("socket.io").listen(3000, { log: false });
     
+    io.configure(function () {
+        io.set("transports", ["xhr-polling"]);
+        io.set("polling duration", 2);
+    });
+    
     // One manager per app
     var manager = new ClientSkeletonManager();
         
