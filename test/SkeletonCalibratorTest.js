@@ -87,6 +87,34 @@ test("calibrateJoint - both have zero rotation matrices", 1, function (assert) {
     assert.equal(actual, null, true);
 });
 
+test("calibrateJoint - no reference joint reading", 1, function (assert) {
+    var otherJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var actual = SkeletonCalibrator.calibrateJoint(null, otherJoint);
+    
+    assert.equal(actual, null, true);
+});
+
+test("calibrateJoint - no other joint reading", 1, function (assert) {
+    var refJoint = {
+        position: [15, 15, 15],
+        rotation: Fixtures.zeroes3x3
+    };
+    
+    var actual = SkeletonCalibrator.calibrateJoint(refJoint, null);
+    
+    assert.equal(actual, null, true);
+});
+
+test("calibrateJoint - no readings whatsoever", 1, function (assert) {    
+    var actual = SkeletonCalibrator.calibrateJoint(null, null);
+    
+    assert.equal(actual, null, true);
+});
+
 // This is more of an integration test
 // as it requires syncing of coordinate systems
 // which in turn requires the RotationCalibrator
