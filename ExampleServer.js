@@ -24,11 +24,6 @@ exports.init = function () {
         { log: false }
     );
     
-    io.configure(function () {
-        io.set("transports", ["xhr-polling"]);
-        io.set("polling duration", 2);
-    });
-    
     // One manager per app
     var manager = new ClientSkeletonManager();
         
