@@ -9,13 +9,14 @@ exports.init = function () {
     // Logger
     var winston = require("winston");
 
-    if (process.env.logentries_token) {
+    if (process.env.loggly_inputToken) {
+        winston.add(require("winston-loggly").Loggly, {
+            subdomain: process.env.loggly_subdomain,
+            inputToken: process.env.loggly_inputToken,
+            json: true
+        });
+        
         winston.info("switching to SaaS logger");
-        require("node-logentries")
-            .logger({
-                token: process.env.logentries_token
-            })
-            .winston(winston);
     }
     
     // Uses the socket.io server component (debug output suppressed)
