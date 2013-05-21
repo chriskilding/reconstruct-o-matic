@@ -4,6 +4,16 @@ A machine vision multi-view scene reconstruction system that aggregates OpenNI d
 
 For now, the system only runs in a Node.js server environment, but most of the library code is independent of the Node environment and could be used in other places, including your own applications.
 
+## Partners
+[Nodejitsu](https://www.nodejitsu.com/) has kindly provided a free instance upon which we've hosted the `ExampleServer`, so you can play with it before you install anything.
+
+[![Nodejitsu Deploy Status Badges](https://webhooks.nodejitsu.com/themasterchef/reconstruct-o-matic.png)](https://webops.nodejitsu.com#nodejitsu/webhooks)
+
+## The idea behind it
+Anybody who has used a Kinect will have noticed that if you put your hand behind your back, the Kinect cannot see it any more because it is obviously just a camera viewing the scene from one position. Depending on your application, occlusion of limbs could be a minor annoyance or a major problem. To counter this, we can use two or three Kinects to capture the subject from multiple angles, meaning that if a limb is hidden from one sensor, another sensor can still see it.
+
+This arrangement also extends the overall area which can be monitored: whereas a single Kinect has a nominal maximum range of 3.5 metres (see [Primesense Inc. 2011](http://www.openni.org/wp-content/uploads/2013/02/NITE-Algorithms.pdf)), a multiple Kinect setup could potentially support double this range, maybe even more, depending on the exact operational conditions.
+
 ## Principal components
 - `math/`: a body of math-heavy 'library' code written in a mostly functional style to eliminate as much error-prone mutable state as possible while increasing its flexibility.
 - Calibrators: a series of modules which calibrate a secondary sensor so that its subsequent data input can be 'transformed' to make it look like it was a reading from the primary sensor's point of view. Like the math code, they are written in a functional style to use the elegant bottom-up form of coding that lets us calibrate and reconstruct a skeleton vector by vector, and joint by joint.
