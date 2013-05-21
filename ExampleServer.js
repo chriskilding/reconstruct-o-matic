@@ -7,9 +7,8 @@ exports.init = function () {
     var ClientSkeletonManager = require("./lib/server-helpers/ClientSkeletonManager");
 
     // Logger
+    // Is attached to console by default
     var winston = require("winston");
-    // Attach to console
-    winston.add(winston.transports.Console);
     
     if (process.env.loggly_inputToken) {
         console.info("adding SaaS logger");
