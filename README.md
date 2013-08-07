@@ -24,6 +24,9 @@ This arrangement also extends the overall area which can be monitored: whereas a
 ## Examples
 An example server has been provided which exposes a socket.io interface on `localhost:3000`; start it by running `npm start`. You should be able to connect to this with a compatible socket.io client and start sending skeleton data to it. The example server was originally developed using [mocapjs](https://github.com/themasterchef/mocap.js) as the client and the ZigFu browser plugin as the data source.
 
+## Using for calibration alone
+If your app only uses this module for calibration, you will want to use the `SkeletonCalibrator#calibrateSkeleton(refSkeleton, otherSkeleton)` function to determine the rotation and position deltas between each pair of your skeletons.
+
 ## Tests
 Unit testing is done with Node.js ports of the QUnit and Sinon.js frameworks. To run the tests, just `cd` into the project folder and run `npm test`.
 
