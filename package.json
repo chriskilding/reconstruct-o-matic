@@ -16,9 +16,13 @@
         "qunit": "0.5.16",
         "sinon": "1.6.0"
     },
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/themasterchef/reconstruct-o-matic.git"
+        "url": "git://github.com/themasterchef/reconstruct-o-matic.git"
     },
     "scripts": {
         "start": "node ./server.js",
