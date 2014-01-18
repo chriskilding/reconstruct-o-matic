@@ -1,37 +1,38 @@
 {
-    "name": "reconstruct-o-matic",
-    "description": "A machine vision scene reconstruction system that aggregates OpenNI data from multiple sensors.",
-    "author": "Christopher Kilding <mr.chris.k@gmail.com>",
-    "version": "0.0.1",
-    "main": "./main",
-    "dependencies": {
-        "socket.io": "0.9.11",
-        "sylvester": "0.0.21",
-        "underscore": "1.4.4",
-        "signals": "1.0.0",
-        "winston": "0.7.1",
-        "winston-loggly": "0.6.0",
-    	"state": "0.2.0"
-    },
-    "devDependencies": {
-        "qunit": "0.5.16",
-        "sinon": "1.6.0"
-    },
-    "directories": {
-        "lib": "lib",
-        "test": "test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/themasterchef/reconstruct-o-matic.git"
-    },
-    "scripts": {
-        "start": "node ./server.js",
-        "test": "node test/runner.js"
-    },
-    "license": "MIT",
-    "engines": {
-        "node": ">=0.6"
-    },
-    "subdomain": "themasterchef-reconstruct-o-matic"
+  "name": "reconstruct-o-matic",
+  "description": "A machine vision scene reconstruction system that aggregates OpenNI data from multiple sensors.",
+  "author": "Christopher Kilding <mr.chris.k@gmail.com>",
+  "version": "0.0.1",
+  "main": "./main",
+  "dependencies": {
+    "socket.io": "0.9.11",
+    "sylvester": "0.0.21",
+    "underscore": "1.4.4",
+    "signals": "1.0.0",
+    "winston": "0.7.1",
+    "winston-loggly": "0.6.0",
+    "state": "0.2.0",
+    "simplestorm": "0.0.3"
+  },
+  "devDependencies": {
+    "qunit": "0.5.16",
+    "sinon": "1.6.0"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/themasterchef/reconstruct-o-matic.git"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "test": "node test/runner.js"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "subdomain": "themasterchef-reconstruct-o-matic"
 }
