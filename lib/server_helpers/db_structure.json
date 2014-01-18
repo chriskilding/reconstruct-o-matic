@@ -1,0 +1,40 @@
+{
+    "room12346": {
+        "readings": [
+            {
+                "id": "1",
+                "skeletonTracked": true,
+                "positionTracked": true,
+                "skeleton": {
+                    "1": {
+                        "position": [1, 2, 3],
+                        "positionconfidence": 0.9
+                    }        
+                }
+            }    
+        ],
+        "referenceClient": {
+            "id": "client12345",
+            "skeletonReading": {
+                "1": {
+                    "position": [1, 2, 3],
+                    "positionconfidence": 0.9
+                }        
+            }
+        },
+        "clients": { 
+            "client12345": {
+                "positionDelta": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "rotationDelta": [
+                    0, 0, 0,
+                    0, 0, 0,
+                    0, 0, 0
+                ]
+            }
+        }
+    }
+}
