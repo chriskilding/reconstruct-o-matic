@@ -12,7 +12,8 @@
     "winston": "0.7.1",
     "winston-loggly": "0.6.0",
     "state": "0.2.0",
-    "simplestorm": "0.0.3"
+    "simplestorm": "0.0.3",
+    "mongodb": "~1.3.23"
   },
   "devDependencies": {
     "qunit": "0.5.16",

@@ -1,6 +1,7 @@
 /*jslint node: true */
 "use strict";
 
+var MongoClient = require('mongodb').MongoClient;
 var io = require("socket.io");
 var _ = require("underscore");
 var Signal = require("signals");
@@ -22,19 +23,21 @@ exports.init = function () {
 		calibrationSent: new Signal(),
 		readingSent: new Signal()
 	};
-	
-	var db = {};
-		
+			
 	// Bind the socketio callback function to its dependencies
 	var callback = _.partial(SocketioSource.callback, 
 							 ioserver,
 							 signals.calibrationSent,
 							 signals.readingSent);
 	
-	// Create and start the topologies
-	CalibrationTopology(db, signals.calibrationSent).start();
-	ReconstructionTopology(db, ioserver, signals.readingSent).start();
-	
 	// Start the data source
-    ioserver.sockets.on("connection", callback);
+	ioserver.sockets.on("connection", callback);
+	
+	// Use the native mongo parser for higher performance.
+  	MongoClient.connect(process.env.mongo_url, {db: {native_parser: true}}, function (err, db) {
+  						
+  		// Create and start the topologies
+		CalibrationTopology(db, signals.calibrationSent).start();
+		ReconstructionTopology(db, ioserver, signals.readingSent).start();				
+  	});
 };
