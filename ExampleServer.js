@@ -1,6 +1,8 @@
 /*jslint node: true */
 "use strict";
 
+var io = require("socket.io");
+var _ = require("underscore");
 var Signal = require("signals");
 
 var CalibrationTopology = require("./lib/server_helpers/calibration_topology");
@@ -11,7 +13,7 @@ var SocketioSource = require("./lib/server_helpers/spouts/socketio_source");
 // using socket.io as a transport
 exports.init = function () {    
     // Uses the socket.io server component (debug output suppressed)
-    var io = require("socket.io").listen(
+    var ioserver = io.listen(
         process.env.port || 3000,
         { log: false }
     );
@@ -25,14 +27,14 @@ exports.init = function () {
 		
 	// Bind the socketio callback function to its dependencies
 	var callback = _.partial(SocketioSource.callback, 
-							 io,
+							 ioserver,
 							 signals.calibrationSent,
 							 signals.readingSent);
 	
 	// Create and start the topologies
 	CalibrationTopology(db, signals.calibrationSent).start();
-	ReconstructionTopology(db, io, signals.readingSent).start();
+	ReconstructionTopology(db, ioserver, signals.readingSent).start();
 	
 	// Start the data source
-    io.sockets.on("connection", callback);
+    ioserver.sockets.on("connection", callback);
 };
