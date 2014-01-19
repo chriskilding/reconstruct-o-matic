@@ -1,7 +1,6 @@
 {
-    "rooms": [
-        {
-            "id": "room12346",
+    "rooms": { 
+        "room12346": {
             "readings": [
                 {
                     "id": "1",
@@ -15,32 +14,29 @@
                     }
                 }    
             ],
-            "clients": {    
-                "reference": {
-                    "id": "client12345",
-                    "skeletonReading": {
-                        "1": {
-                            "position": [1, 2, 3],
-                            "positionconfidence": 0.9
-                        }        
-                    }
-                },
-                "secondary": [
-                    {
-                        "id": "client12347",
-                        "positionDelta": {
-                            "x": 10,
-                            "y": 0,
-                            "z": 72
-                        },
-                        "rotationDelta": [
-                            0, 0, 0,
-                            0, 0, 0,
-                            0, 0, 0
-                        ]
-                    }
-                ]
+            "referenceClient": {
+                "id": "client12345",
+                "skeletonReading": {
+                    "1": {
+                        "position": [1, 2, 3],
+                        "positionconfidence": 0.9
+                    }        
+                }
+            },
+            "secondaryClients": { 
+                "client12347": {
+                    "positionDelta": {
+                        "x": 10,
+                        "y": 0,
+                        "z": 72
+                    },
+                    "rotationDelta": [
+                        0, 0, 0,
+                        0, 0, 0,
+                        0, 0, 0
+                    ]
+                }
             }
         }
-    ]    
+    }    
 }
