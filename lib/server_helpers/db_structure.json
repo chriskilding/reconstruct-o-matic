@@ -1,40 +1,57 @@
 {
-    "rooms": { 
-        "room12346": {
-            "readings": [
-                {
-                    "id": "1",
-                    "skeletonTracked": true,
-                    "positionTracked": true,
-                    "skeleton": {
-                        "1": {
-                            "position": [1, 2, 3],
-                            "positionconfidence": 0.9
-                        }        
-                    }
-                }    
-            ],
-            "referenceClientId": "client12345",
-            "referenceClientReading": {
+    "referenceClients": {
+        "room12346": "client12345",
+        "room13247": "client12349"
+    },
+
+    "clientReadings": {
+        "client12345": { 
+            "id": "1",
+            "skeletonTracked": true,
+            "positionTracked": true,
+            "skeleton": {
                 "1": {
                     "position": [1, 2, 3],
                     "positionconfidence": 0.9
                 }        
-            },
-            "secondaryClients": { 
-                "client12347": {
-                    "positionDelta": {
-                        "x": 10,
-                        "y": 0,
-                        "z": 72
-                    },
-                    "rotationDelta": [
-                        0, 0, 0,
-                        0, 0, 0,
-                        0, 0, 0
-                    ]
-                }
             }
+        },
+
+        "client12349": { 
+            "id": "1",
+            "skeletonTracked": true,
+            "positionTracked": true,
+            "skeleton": {
+                "1": {
+                    "position": [4, 5, 6],
+                    "positionconfidence": 0.7
+                }        
+            }
+        }    
+    },
+
+    "referenceCalibrationReadings": {
+        "room12346": {
+            "1": {
+                "position": [1, 2, 3],
+                "positionconfidence": 0.9
+            }        
         }
+    },
+
+    "secondaryCalibrationPositionDeltas": {
+        "client12349": {
+            "x": 10,
+            "y": 0,
+            "z": 72
+        }
+    },
+    
+    "secondaryCalibrationRotationDeltas": {
+        "client12349": [
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0
+        ]
     }    
 }
