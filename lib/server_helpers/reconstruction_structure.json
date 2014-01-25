@@ -1,0 +1,18 @@
+{
+    "room12346": {
+        "readings": [
+            {
+                "id": "1",
+                "skeletonTracked": true,
+                "positionTracked": true,
+                "skeleton": {
+                    "1": {
+                        "position": [1, 2, 3],
+                        "positionconfidence": 0.9
+                    }        
+                }
+            }    
+        ],
+        "referenceClientId": "client12345"
+    }
+}
