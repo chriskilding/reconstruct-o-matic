@@ -30,15 +30,6 @@
         }    
     },
 
-    "referenceCalibrationReadings": {
-        "room12346": {
-            "1": {
-                "position": [1, 2, 3],
-                "positionconfidence": 0.9
-            }        
-        }
-    },
-
     "secondaryCalibrationPositionDeltas": {
         "client12349": {
             "x": 10,
