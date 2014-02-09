@@ -1,5 +1,5 @@
 {
-    "referenceClients": {
+    "owners": {
         "room12346": "client12345",
         "room13247": "client12349"
     },
